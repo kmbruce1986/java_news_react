@@ -53,7 +53,11 @@ class App extends Component {
               user={this.state.isAdmin}/>
             }}/>
 
-
+            <Route exact path="/journalist/:id" render={(props) => {
+              const url = "/journalists/" + props.match.params.id
+              return <JournalistContainer url={url}
+              user={this.state.isAdmin}/>
+            }}/>
 
 
           </Switch>
