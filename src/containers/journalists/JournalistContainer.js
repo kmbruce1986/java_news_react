@@ -8,6 +8,7 @@ class JournalistContainer extends Component {
       journalist: null
     }
     this.url = props.url;
+    this.handleChange = this.handleChange.bind(this);
   }
 
   componentDidMount(){
@@ -19,6 +20,12 @@ class JournalistContainer extends Component {
         this.setState({journalist: data})
       })
     }
+  }
+
+  handleChange(event) {
+    let value = event.target.value
+    let name = event.target.name
+    this.setState({journalist: name[value]});
   }
 
   handleSubmit(event){
@@ -55,7 +62,7 @@ class JournalistContainer extends Component {
             <input type="text" placeholder="Last Name" name="lastName"/>
             <input type="text" placeholder="Job Title" name="jobTitle"/>
             <input type="text" placeholder="Portrait Link" name="portraitURL"/>
-            <textarea placeholder="Bio" name="bio" cols="30" rows="10"></textarea>
+            <textarea placeholder="Bio" name="bio" cols="30" rows="10"/>
             <input type="text" placeholder="Twitter Handle" name="twitterHandle"/>
             <button type="submit">Save</button>
           </form>
@@ -65,7 +72,15 @@ class JournalistContainer extends Component {
     else {
       return (
         <div>
-          edit
+          <form onSubmit={this.handleSubmit}>
+            <input type="text" value={this.state.journalist.firstName} onChange={this.handleChange} name="firstName"/>
+            <input type="text" value={this.state.journalist.lastName} onChange={this.handleChange} name="lastName"/>
+            <input type="text" value={this.state.journalist.jobTitle} onChange={this.handleChange} name="jobTitle"/>
+            <input type="text" value={this.state.journalist.portraitURL} onChange={this.handleChange} name="portraitURL"/>
+            <textarea value={this.state.journalist.bio} onChange={this.handleChange} name="bio" cols="30" rows="10"/>
+            <input type="text" value={this.state.journalist.twitterHandle} onChange={this.handleChange} name="twitterHandle"/>
+            <button type="submit">Save</button>
+          </form>
         </div>
       )
     }
