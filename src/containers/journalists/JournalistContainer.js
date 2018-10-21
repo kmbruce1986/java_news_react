@@ -26,7 +26,10 @@ class JournalistContainer extends Component {
   handleChange(event) {
     let value = event.target.value
     let name = event.target.name
-    this.setState({journalist: name[value]});
+    // this.setState({journalist: name[value]});
+    let tempJournalist = {...this.state.journalist};
+    tempJournalist[name] = value;
+    this.setState({journalist: tempJournalist});
   }
 
   handleSubmit(event){
