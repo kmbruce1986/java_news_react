@@ -54,14 +54,13 @@ class App extends Component {
             }}/>
 
             <Route exact path="/journalist/new" render={(props) => {
-              const url = null;
+              const url = "/journalists";
               return <JournalistContainer url={url} user={this.state.isAdmin}/>
             }}/>
 
             <Route exact path="/journalist/:id" render={(props) => {
               const url = "/journalists/" + props.match.params.id
-              return <JournalistContainer url={url}
-              user={this.state.isAdmin}/>
+              return <JournalistContainer url={url} user={this.state.isAdmin}/>
             }}/>
 
 
