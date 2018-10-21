@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import ArticleList from './ArticleList.js';
 
 class ArticleContainer extends Component{
   constructor(props){
@@ -22,7 +23,9 @@ class ArticleContainer extends Component{
 
   render(){
     return(
-      <div>ArticleContainer</div>
+      <div>ArticleContainer
+        <ArticleList article={this.state.article} user={this.state.isAdmin}/>
+      </div>
     )
   }
 
