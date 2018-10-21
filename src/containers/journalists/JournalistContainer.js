@@ -9,6 +9,7 @@ class JournalistContainer extends Component {
     }
     this.url = props.url;
     this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   componentDidMount(){
@@ -31,12 +32,17 @@ class JournalistContainer extends Component {
   handleSubmit(event){
     event.preventDefault();
     let requestType;
-    if (JournalistContainer.url != null) {
+    let journalistId = null;
+    let fetchURL = "/journalists"
+    if (this.state.journalist != null) {
       requestType = 'PUT'
+      journalistId = this.state.journalist.id
+      fetchURL = "/journalists/" + journalistId
     } else {
       requestType = 'POST'
     }
-    fetch("/journalists",{
+    console.log(fetchURL);
+    fetch(fetchURL,{
       method: requestType,
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({
