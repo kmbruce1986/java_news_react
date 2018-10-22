@@ -12,7 +12,18 @@ const ArticleList = (props) => {
 	)
 	})
 
+// function to define what should be rendered in the HeadContent - either category name, journalist, or toparticle
+  function checkHeadContentType(articles){
+    // if to be sorted via category
+     return articles[0].category;
+//  if to be sorted via journalist
+    return articles[0].journalist;
+// if all articles to be returned 
+    else return "all";
+  }
+
 	return (
+    <div headContentType={checkHeadContentType(articles)}></div>
 		<ul className="component-list">
 			{articles}
 		</ul>
