@@ -29,16 +29,20 @@ class HomeContainer extends Component{
     fetch(this.url)
     .then((res) => res.json())
     .then((data) => {
+
+      console.log(this.url);
+      console.log(data);
+
       if (this.props.type === 'articles'){
-        this.setState({articles: data});
         this.setState({contentType: "toparticle"})
       } else if (this.props.type === 'categories') {
-        this.setState({articles: data});
         this.setState({contentType: "category"})
       } else{
-        this.setState({articles: data});
         this.setState({contentType: "journalist"})
       }
+
+      this.setState({articles: data});
+
     })
 
   }
@@ -54,8 +58,8 @@ class HomeContainer extends Component{
         return (
           <div>
             <ArticleHead
-              article={this.state.articles._embedded.articles[0]}/>
-            <ArticleList articles={this.state.articles._embedded.articles.slice(1)}/>
+              article={this.state.articles[0]}/>
+            <ArticleList articles={this.state.articles.slice(1)}/>
           </div>
         )
         break;
