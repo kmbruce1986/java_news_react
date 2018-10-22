@@ -52,7 +52,7 @@ class App extends Component {
             categories={this.state.categories}/>
             <Switch>
 
-              {/* <Route exact path="/" render={(props) => {
+              <Route exact path="/" render={(props) => {
                 const url = "/articles/"
                 return <HomeContainer
                   url={url}
@@ -60,7 +60,7 @@ class App extends Component {
                   journalists={this.state.journalists}
                   categories={this.state.categories}
                   type="articles"/>
-                }}/> */}
+                }}/>
 
                 <Route exact path="/journalists/:id" render={(props) => {
                   const url = "/articles/journalist/" + props.match.params.id
@@ -106,7 +106,7 @@ class App extends Component {
                             journalists={this.state.journalists}/>)
                           }}/>
 
-                          <Route exact path='/article/new' render={(props) => {
+                          <Route exact path='/articles/new' render={(props) => {
                             const url = '/articles'
                             return (
                               <ArticleContainer
@@ -128,31 +128,4 @@ class App extends Component {
                     }
                   }
 
-                  export default App;
-
-
-                  {/* <Route exact path="/journalists" render={() => {
-                    const url = "/journalists";
-                    return <JournalistContainer url={url} user={this.state.isAdmin}/>
-                  }} /> */}
-
-
-                  {/* <Route exact path="/home/category/:id" render={(props) => {
-                    const url = "/articles/" + props.match.params.id
-                    return <ArticleContainer url={url}
-                    user={this.state.isAdmin}/>
-                  }}/>
-
-                  <Route exact path="/home/journalist/:id" render={(props) => {
-                  const url = "/articles/" + props.match.params.id
-                  return <ArticleContainer url={url}
-                  user={this.state.isAdmin}/>
-                }}/> */}
-
-                // <Route exact path="/articles/:id" render={(props) => {
-                //   const url = "/articles/" + props.match.params.id
-                //   return <ArticleContainer url={url}
-                //     user={this.state.isAdmin}
-                //     journalists={this.state.journalists}
-                //     categories={this.state.categories}/>
-                //   }}/>
+export default App;

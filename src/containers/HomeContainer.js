@@ -30,9 +30,6 @@ class HomeContainer extends Component{
     .then((res) => res.json())
     .then((data) => {
 
-      console.log(this.url);
-      console.log(data);
-
       if (this.props.type === 'articles'){
         this.setState({contentType: "toparticle"})
       } else if (this.props.type === 'categories') {
@@ -50,50 +47,45 @@ class HomeContainer extends Component{
   render(){
     if(this.state.articles === null){
       return(
-        <div>Loading...</div>
+        <section className="content-area">Loading...</section>
       )
     } else {
       switch(this.state.contentType){
         case 'toparticle':
         return (
-          <div>
+          <section className="content-area">
             <ArticleHead
               article={this.state.articles[0]}/>
             <ArticleList articles={this.state.articles.slice(1)}/>
-          </div>
+          </section>
         )
         break;
         case 'category':
         return (
-          <div>
+          <section className="content-area">
             <CategoryHead
               category={this.state.category}
             />
             <ArticleList articles={this.state.articles}/>
-          </div>
+          </section>
         )
         break;
         case 'journalist':
         return (
-          <div>
+          <section className="content-area">
             <JournalistHead
               article={this.state.articles[0]}/>
             <ArticleList articles={this.state.articles}/>
-          </div>
+          </section>
         )
         break;
         default:
         return (
-          <div>Loading...</div>
+          <section className="content-area">Loading...</section>
         )
 
 
       }
-
-
-
-
-
 
     }
   }
@@ -102,7 +94,4 @@ class HomeContainer extends Component{
 }
 
 
-
-
 export default HomeContainer;
-{/* <HeadContent articles={this.state.articles} url = {this.url} type={this.props.type} >HC</HeadContent> */}

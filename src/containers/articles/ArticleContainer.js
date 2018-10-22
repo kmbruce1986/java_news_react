@@ -18,12 +18,15 @@ class ArticleContainer extends Component{
     }
 
     this.url = props.url;
+
     this.makeCategoriesList = this.makeCategoriesList.bind(this);
     this.makeJournalistsDropDown = this.makeJournalistsDropDown.bind(this);
     this.handleSelect = this.handleSelect.bind(this);
     this.getArticleCategories = this.getArticleCategories.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
+
+
   }
 
   getArticleCategories(url){
@@ -31,7 +34,6 @@ class ArticleContainer extends Component{
     fetch(url)
     .then((res) => res.json())
     .then((data) => {
-      console.log(data);
       this.setState({categories: data._embedded.categories.map((category) => {
         return category._links.self;
       })});
@@ -42,12 +44,14 @@ class ArticleContainer extends Component{
 
   componentDidMount(){
 
-    if (this.url !== '/article/new'){
+    console.log(this.url);
+
+    if (this.url !== '/articles'){
       fetch(this.url)
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
         this.setState({article: data});
+        console.log(data);
         this.getArticleCategories(data._links.categories.href);
       })
     }
@@ -87,6 +91,7 @@ class ArticleContainer extends Component{
 
   }
 
+
   handleChange(event) {
 
     const value = event.target.value
@@ -102,7 +107,6 @@ class ArticleContainer extends Component{
   makeJournalistsDropDown(){
 
     if (this.props.journalists){
-      console.log(this.props.journalists);
       const journalists = this.props.journalists.map((journalist) => {
         return(
           <option
@@ -134,12 +138,11 @@ class ArticleContainer extends Component{
 
     event.preventDefault();
 
-
-    const article = {
-      ...this.state.article
-    }
-
-    console.log(article);
+    // const article = {
+    //   ...this.state.article
+    // }
+    //
+    // console.log(article);
 
   }
 
@@ -162,7 +165,10 @@ class ArticleContainer extends Component{
       )
     }
 
+    const classes = 'content-area ' + (this.props.user ? 'is-admin': '');
+
     return(
+      <section className={classes}>
       <form onSubmit={this.handleSubmit}>
         <label htmlFor="input-headline">Headline</label>
         <input
@@ -192,7 +198,7 @@ class ArticleContainer extends Component{
         <input
           id="input-bannerImage"
           type="file"
-          value={this.state.article.bannerImage}
+          // value={this.state.article.bannerImage}
           onChange={this.handleChange}
           name="bannerImage"/>
           <br/>
@@ -200,7 +206,7 @@ class ArticleContainer extends Component{
         <input
           id="input-thumbnailImage"
           type="file"
-          value={this.state.article.thumbnailImage}
+          // value={this.state.article.thumbnailImage}
           onChange={this.handleChange}
           name="thumbnailImage"/>
           <br/>
@@ -211,6 +217,7 @@ class ArticleContainer extends Component{
           name="submit"/>
 
       </form>
+    </section>
     )
 
   }
