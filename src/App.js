@@ -53,7 +53,7 @@ class App extends Component {
             <Switch>
 
               <Route exact path="/" render={(props) => {
-                const url = "/articles"
+                const url = "/articles/"
                 return <HomeContainer url={url} user={this.state.isAdmin}
                   journalists={this.state.journalists}
                   categories={this.state.categories}
