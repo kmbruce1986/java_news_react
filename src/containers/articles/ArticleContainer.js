@@ -16,14 +16,15 @@ class ArticleContainer extends Component{
     fetch(this.url)
     .then((res) => res.json())
     .then((data) => {
-      console.log(data);
       this.setState({articles: data})
     })
   }
 
+
   render(){
     return(
       <div>ArticleContainer
+
         <ArticleList articles={this.state.articles} user={this.state.isAdmin}/>
       </div>
     )

@@ -40,6 +40,9 @@ class App extends Component {
   }
 
   render() {
+    if(!this.state.categories){
+      return null;
+    }
     return (
 
       <Router>
@@ -52,21 +55,25 @@ class App extends Component {
                 const url = "/articles"
                 return <HomeContainer url={url} user={this.state.isAdmin}
                   journalists={this.state.journalists}
-                  categories={this.state.categories}/>
+                  categories={this.state.categories}
+                type="articles"/>
                 }}/>
 
                 <Route exact path="/journalists/:id" render={(props) => {
                   const url = "/articles/journalist/" + props.match.params.id
                   return <HomeContainer url={url} user={this.state.isAdmin}
                     journalists={this.state.journalists}
-                    categories={this.state.categories}}/>
+                    categories={this.state.categories}
+                    type="journalist"/>
                   }}/>
 
                   <Route exact path="/categories/:id" render={(props) => {
                     const url = "/articles/category/" + props.match.params.id
                     return <HomeContainer url={url} user={this.state.isAdmin}
                       journalists={this.state.journalists}
-                      categories={this.state.categories}/>
+                      categories={this.state.categories}
+                      categoryId={props.match.params.id}
+                    type="categories"/>
                     }}/>
 
                     <Route exact path="/articles/:id" render={(props) => {
