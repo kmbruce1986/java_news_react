@@ -15,7 +15,7 @@ class HomeContainer extends Component{
       categoryId: props.categoryId,
       categories: props.categories,
       category: props.categories.find((cat) => {
-        return cat.id == props.categoryId;
+        return cat.id === props.categoryId;
       })
     }
 
@@ -55,7 +55,7 @@ class HomeContainer extends Component{
           <div>
             <ArticleHead
               article={this.state.articles._embedded.articles[0]}/>
-            <ArticleList articles={this.state.articles._embedded.articles}/>
+            <ArticleList articles={this.state.articles._embedded.articles.slice(1)}/>
           </div>
         )
         break;
