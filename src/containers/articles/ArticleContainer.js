@@ -44,8 +44,6 @@ class ArticleContainer extends Component{
 
   componentDidMount(){
 
-    console.log(this.url);
-
     if (this.url !== '/articles'){
       fetch(this.url)
       .then((res) => res.json())
@@ -71,20 +69,31 @@ class ArticleContainer extends Component{
     if (this.props.categories){
 
       const categories = this.props.categories.map((category) => {
-        return (<option key={category.id} value={category._links.self.href}>{category.id}: {category.title}</option>);
+        return (<option className="article-category-option" key={category.id} value={category._links.self.href}> {category.title}</option>);
       })
 
       return (
-        <select name="journalists[]" multiple="multiple" onChange={this.handleSelect}>
+        <label>Categories
+        <select id="article-category-select"
+          className="article-category-select"
+          name="journalists[]" multiple="multiple"
+          onChange={this.handleSelect}>
           {categories}
         </select>
+        </label>
       )
 
     } else {
       return (
-        <select  name="journalists[]" multiple="multiple" onChange={this.handleSelect}>>
+        <label>Categories
+        <select
+          id="article-category-select"
+            className="article-category-select"
+            name="journalists[]" multiple="multiple"
+            onChange={this.handleSelect}>
           <li>Loading...</li>
         </select>
+      </label>
       )
     }
 
@@ -117,18 +126,22 @@ class ArticleContainer extends Component{
         )
       })
       return (
+        <label>Journalist
         <select name="journalist">
           <option value="default">-- Select Journalist --</option>
           {journalists}
         </select>
+      </label>
       )
 
 
     } else {
       return (
+        <label>Journalist
         <select name="journalist">
           <option value="default">-- Loading --</option>
         </select>
+      </label>
       )
     }
 
@@ -169,7 +182,7 @@ class ArticleContainer extends Component{
 
     return(
       <section className={classes}>
-      <form onSubmit={this.handleSubmit}>
+      <form className="article-form" onSubmit={this.handleSubmit}>
         <label htmlFor="input-headline">Headline</label>
         <input
           id="input-headline"
@@ -217,6 +230,8 @@ class ArticleContainer extends Component{
           name="submit"/>
 
       </form>
+      {this.makeCategoriesList()}
+      {this.makeJournalistsDropDown()}
     </section>
     )
 

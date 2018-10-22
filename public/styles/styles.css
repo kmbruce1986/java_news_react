@@ -47,3 +47,19 @@ header ul li {
 .is-admin {
   background-color: pink;
 }
+
+.article-form {
+  border: 1px solid darkgray;
+  padding: 5px;
+  margin-bottom: 10px;
+}
+
+.article-category-select {
+  width: 150px;
+  height: 100px;
+  margin-left: 10px;
+}
+
+.article-category-option {
+  padding: 3px;
+}
