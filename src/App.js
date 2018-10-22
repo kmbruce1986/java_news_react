@@ -47,6 +47,7 @@ class App extends Component {
 
       <Router>
         <div className="wrapper">
+
           <NavBar user={this.state.isAdmin} handleToggle={this.toggleUser}
             categories={this.state.categories}/>
             <Switch>
@@ -83,6 +84,16 @@ class App extends Component {
                         journalists={this.state.journalists}
                         categories={this.state.categories}/>
                       }}/>
+
+                    <Route exact path="/journalist/new" render={(props) => {
+                       const url = "/journalists";
+                        return <JournalistContainer url={url} user={this.state.isAdmin}/>
+                       }}/>
+
+                    <Route exact path="/journalist/:id" render={(props) => {
+                       const url = "/journalists/" + props.match.params.id
+                       return <JournalistContainer url={url} user={this.state.isAdmin}/>
+                       }}/>
 
 
 
