@@ -6,7 +6,7 @@ class ArticleContainer extends Component{
     super(props);
     this.state = {
       isAdmin: this.props.user,
-      article: null
+      articles: []
     }
 
     this.url = props.url;
@@ -17,14 +17,14 @@ class ArticleContainer extends Component{
     .then((res) => res.json())
     .then((data) => {
       console.log(data);
-      this.setState({article: data})
+      this.setState({articles: data})
     })
   }
 
   render(){
     return(
       <div>ArticleContainer
-        <ArticleList article={this.state.article} user={this.state.isAdmin}/>
+        <ArticleList articles={this.state.articles} user={this.state.isAdmin}/>
       </div>
     )
   }
