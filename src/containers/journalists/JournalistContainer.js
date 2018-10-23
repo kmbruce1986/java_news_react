@@ -56,7 +56,6 @@ class JournalistContainer extends Component {
     })
   }
 
-
   render(){
     if (!this.state.journalist) {
       return (

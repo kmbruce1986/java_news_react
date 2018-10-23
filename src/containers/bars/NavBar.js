@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Category from '../../components/categories/Category.js';
+import {Link} from 'react-router-dom';
 
 
 class NavBar extends Component {

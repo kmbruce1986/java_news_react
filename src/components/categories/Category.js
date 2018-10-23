@@ -3,7 +3,8 @@ import React from 'react';
 
 const Category = (props) => {
   const categories = props.categories.map((category) => {
-  		return <li key={category.id}>{category.title}</li>
+    let url = "/categories/" + category.id;
+  		return <li key={category.id}><a href={url}>{category.title}</a></li>
   	})
 
   	return (
