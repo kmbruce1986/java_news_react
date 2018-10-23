@@ -4,11 +4,11 @@ import React from 'react';
 const Category = (props) => {
   const categories = props.categories.map((category) => {
     let url = "/categories/" + category.id;
-  		return <li key={category.id}><a href={url}>{category.title}</a></li>
+  		return <a href={url}><li key={category.id}>{category.title}</li></a>
   	})
 
   	return (
-  		<div className="component">
+  		<div className="component nav-links">
   			<ul className="name">{categories} </ul>
   		</div>
   	)

@@ -4,6 +4,8 @@ import NavBar from "./containers/bars/NavBar.js";
 import JournalistContainer from "./containers/journalists/JournalistContainer.js";
 import ArticleContainer from "./containers/articles/ArticleContainer.js";
 import HomeContainer from "./containers/HomeContainer.js";
+import SideBar from './containers/sidebar/SideBar.js';
+import FooterContainer from './containers/footer/FooterContainer.js';
 
 
 class App extends Component {
@@ -51,6 +53,7 @@ class App extends Component {
 
           <NavBar user={this.state.isAdmin} handleToggle={this.toggleUser}
             categories={this.state.categories}/>
+          <SideBar/>
             <Switch>
 
               <Route exact path="/" render={(props) => {
@@ -123,7 +126,7 @@ class App extends Component {
 
 
                             </Switch>
-                            {/* footer goes here */}
+                            <FooterContainer/>
                           </div>
                         </Router>
 

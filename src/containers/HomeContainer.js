@@ -53,7 +53,7 @@ class HomeContainer extends Component{
       switch(this.state.contentType){
         case 'toparticle':
         return (
-          <section className="content-area">
+          <section className="content-area section">
             <ArticleHead
               article={this.state.articles[0]}/>
             <ArticleList articles={this.state.articles.slice(1)}/>
@@ -62,7 +62,7 @@ class HomeContainer extends Component{
         break;
         case 'category':
         return (
-          <section className="content-area">
+          <section className="content-area section">
             <CategoryHead
               category={this.state.category}
             />
@@ -72,7 +72,7 @@ class HomeContainer extends Component{
         break;
         case 'journalist':
         return (
-          <section className="content-area">
+          <section className="content-area section">
             <JournalistHead
               article={this.state.articles[0]}/>
             <ArticleList articles={this.state.articles}/>
@@ -81,7 +81,7 @@ class HomeContainer extends Component{
         break;
         default:
         return (
-          <section className="content-area">Loading...</section>
+          <section className="content-area section" >Loading...</section>
         )
 
 

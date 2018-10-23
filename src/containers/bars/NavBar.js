@@ -29,17 +29,23 @@ class NavBar extends Component {
   render(){
 
     return (
-    <header>
-      <a href="/"><img width="100" src="/SGNN.png" alt="SGNNlogo"/></a>
-      <label className="switch">
-      <input
-        type="checkbox"
-        value={this.state.isAdmin}
-        checked={this.props.user === true ? "checked" : ""}
-        onChange={this.handleToggle}/>
-      <span className="slider round"/>
-      </label>
-      <Category categories={this.state.categories}></Category>
+    <header className="header">
+      <div className="logo">
+        <a  href="/"><img className="logo" src="/SGNN.png" alt="SGNNlogo"/></a>
+      </div>
+      <nav className="nav">
+        <Category categories={this.state.categories}></Category>
+      </nav>
+      <div className="login">
+        <label className="switch">
+        <input
+          type="checkbox"
+          value={this.state.isAdmin}
+          checked={this.props.user === true ? "checked" : ""}
+          onChange={this.handleToggle}/>
+        <span className="slider round"/>
+        </label>
+      </div>
     </header>
   )
   }

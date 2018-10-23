@@ -13,7 +13,9 @@ class ArticleContainer extends Component{
         copy: '',
         bannerImage: '',
         thumbnailImage: '',
-        publishedDateTime: new Date().toISOString().split('.')[0]
+        publishedDateTime: new Date().toISOString().split('.')[0],
+        categories: [],
+        journalist: null
       },
       categories: null
     }
@@ -32,6 +34,8 @@ class ArticleContainer extends Component{
 
     this.handleDelete = this.handleDelete.bind(this);
 
+    this.isSelectedCategory = this.isSelectedCategory.bind(this);
+
 
   }
 
@@ -49,8 +53,6 @@ class ArticleContainer extends Component{
   }
 
   componentDidMount(){
-
-    console.log('did mount', this.url);
 
     if (this.url !== "/articles"){
       fetch(this.url)
@@ -90,22 +92,51 @@ class ArticleContainer extends Component{
     let values = Array.from(e.target.selectedOptions)
     .map(option => option.value);
 
+  }
 
+  isSelectedCategory(category){
+
+    let isCategory = false;
+
+    this.state.article.categories.map((cat) => {
+      if (cat.id == category.id){
+        isCategory = true;
+      }
+    });
+
+    return isCategory;
   }
 
   makeCategoriesList(){
 
-    if (this.props.categories){
+    if (this.props.categories && (this.state.article.categories.length > 0)){
 
       const categories = this.props.categories.map((category) => {
-        return (<option className="article-category-option" key={category.id} value={category._links.self.href}> {category.title}</option>);
+
+        console.log(this.isSelectedCategory(category));
+        let selected = '';
+        if (this.isSelectedCategory(category)){
+          selected = 'selected';
+        }
+
+        return (
+          <option
+            className="article-category-option"
+            key={category.id}
+            value={category._links.self.href}>
+            {category.title}
+          </option>
+        );
+
       })
 
       return (
         <label>Categories
-          <select id="article-category-select"
+          <select
+            id="article-category-select"
             className="article-category-select"
-            name="journalists[]" multiple="multiple"
+            name="journalists[]"
+            multiple="multiple"
             onChange={this.handleSelect}>
             {categories}
           </select>
