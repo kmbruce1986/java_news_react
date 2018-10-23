@@ -12,7 +12,8 @@ class App extends Component {
     this.state = {
       isAdmin: true,
       categories: null,
-      journalists: null
+      journalists: null,
+      imageStore: "http://localhost:8080/images/"
     }
     this.toggleUser = this.toggleUser.bind(this);
   }
@@ -102,6 +103,7 @@ class App extends Component {
                           return (<ArticleContainer
                             url={url}
                             user={this.state.isAdmin}
+                            imageStore={this.state.imageStore}
                             categories={this.state.categories}
                             journalists={this.state.journalists}/>)
                           }}/>
@@ -112,6 +114,7 @@ class App extends Component {
                               <ArticleContainer
                                 url={url}
                                 user={this.state.isAdmin}
+                                imageStore={this.state.imageStore}
                                 categories={this.state.categories}
                                 journalists={this.state.journalists}/>)
                               }}/>

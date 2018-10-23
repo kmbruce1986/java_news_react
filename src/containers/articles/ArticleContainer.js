@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import ImageUploader from '../../components/imagecomponent/ImageUploader.js';
 
 class ArticleContainer extends Component{
 
@@ -26,6 +27,9 @@ class ArticleContainer extends Component{
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
 
+    this.handleBannerSelect = this.handleBannerSelect.bind(this);
+    this.handleThumbSelect = this.handleThumbSelect.bind(this);
+
 
   }
 
@@ -44,15 +48,38 @@ class ArticleContainer extends Component{
 
   componentDidMount(){
 
-    if (this.url !== '/articles'){
+    console.log('did mount', this.url);
+
+    if (this.url !== "/articles"){
       fetch(this.url)
       .then((res) => res.json())
       .then((data) => {
         this.setState({article: data});
         console.log(data);
-        //this.getArticleCategories(data._links.categories.href);
+        if (data._links.categories.href){
+          this.getArticleCategories(data._links.categories.href);
+        }
       })
     }
+
+  }
+
+  handleBannerSelect(imageFileName){
+
+    const articleCopy = {
+      ...this.state.article
+    }
+    articleCopy.bannerImage = imageFileName;
+    this.setState({article: articleCopy});
+  }
+
+  handleThumbSelect(imageFileName){
+
+    const articleCopy = {
+      ...this.state.article
+    }
+    articleCopy.thumbnailImage = imageFileName;
+    this.setState({article: articleCopy});
 
   }
 
@@ -96,7 +123,6 @@ class ArticleContainer extends Component{
       </label>
       )
     }
-
 
   }
 
@@ -210,17 +236,15 @@ class ArticleContainer extends Component{
         <label htmlFor="input-bannerImage">Banner Image</label>
         <input
           id="input-bannerImage"
-          type="file"
-          // value={this.state.article.bannerImage}
-          onChange={this.handleChange}
+          type="text"
+          value={this.state.article.bannerImage}
           name="bannerImage"/>
           <br/>
         <label htmlFor="input-thumbnailImage">Thumbnail Image</label>
         <input
           id="input-thumbnailImage"
-          type="file"
-          // value={this.state.article.thumbnailImage}
-          onChange={this.handleChange}
+          type="text"
+          value={this.state.article.thumbnailImage}
           name="thumbnailImage"/>
           <br/>
         <input
@@ -232,6 +256,18 @@ class ArticleContainer extends Component{
       </form>
       {this.makeCategoriesList()}
       {this.makeJournalistsDropDown()}
+      <ImageUploader
+        imageStore={this.props.imageStore}
+        title={"Banner Image"}
+        type={"banner"}
+        handleImageSelect={this.handleBannerSelect}
+      />
+      <ImageUploader
+        imageStore={this.props.imageStore}
+        title={"Thumbnail Image"}
+        type={"thumb"}
+        handleImageSelect={this.handleThumbSelect}
+      />
     </section>
     )
 
