@@ -99,7 +99,7 @@ class App extends Component {
                         }}/>
 
                         <Route exact path="/article/:id" render={(props) => {
-                          const url = "/articles/" + props.match.params.id
+                          const url = "/articles/" + props.match.params.id + "?projection=embedArticleDetails"
                           return (<ArticleContainer
                             url={url}
                             user={this.state.isAdmin}

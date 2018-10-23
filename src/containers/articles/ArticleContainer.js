@@ -30,6 +30,8 @@ class ArticleContainer extends Component{
     this.handleBannerSelect = this.handleBannerSelect.bind(this);
     this.handleThumbSelect = this.handleThumbSelect.bind(this);
 
+    this.handleDelete = this.handleDelete.bind(this);
+
 
   }
 
@@ -101,26 +103,26 @@ class ArticleContainer extends Component{
 
       return (
         <label>Categories
-        <select id="article-category-select"
-          className="article-category-select"
-          name="journalists[]" multiple="multiple"
-          onChange={this.handleSelect}>
-          {categories}
-        </select>
+          <select id="article-category-select"
+            className="article-category-select"
+            name="journalists[]" multiple="multiple"
+            onChange={this.handleSelect}>
+            {categories}
+          </select>
         </label>
       )
 
     } else {
       return (
         <label>Categories
-        <select
-          id="article-category-select"
+          <select
+            id="article-category-select"
             className="article-category-select"
             name="journalists[]" multiple="multiple"
             onChange={this.handleSelect}>
-          <li>Loading...</li>
-        </select>
-      </label>
+            <li>Loading...</li>
+          </select>
+        </label>
       )
     }
 
@@ -153,24 +155,36 @@ class ArticleContainer extends Component{
       })
       return (
         <label>Journalist
-        <select name="journalist">
-          <option value="default">-- Select Journalist --</option>
-          {journalists}
-        </select>
-      </label>
+          <select name="journalist">
+            <option value="default">-- Select Journalist --</option>
+            {journalists}
+          </select>
+        </label>
       )
 
 
     } else {
       return (
         <label>Journalist
-        <select name="journalist">
-          <option value="default">-- Loading --</option>
-        </select>
-      </label>
+          <select name="journalist">
+            <option value="default">-- Loading --</option>
+          </select>
+        </label>
       )
     }
 
+  }
+
+  handleDelete(event){
+    console.log("Delete");
+    console.log(this.url);
+    fetch(this.url,{
+      method: 'DELETE',
+      headers: {'Content-Type': 'application/json'}
+    })
+    .then(() => {
+      window.location = "/";
+    })
   }
 
   handleSubmit(event){
@@ -208,75 +222,75 @@ class ArticleContainer extends Component{
 
     return(
       <section className={classes}>
-      <form className="article-form" onSubmit={this.handleSubmit}>
-        <label htmlFor="input-headline">Headline</label>
-        <input
-          id="input-headline"
-          type="text"
-          value={this.state.article.headline}
-          onChange={this.handleChange}
-          name="headline"/>
-          <br/>
-        <label htmlFor="input-subline">Subline</label>
-        <input
-          id="input-subline"
-          type="text"
-          value={this.state.article.subline}
-          onChange={this.handleChange}
-          name="subline"/>
-          <br/>
-        <label htmlFor="input-copy">Copy</label>
-        <input
-          id="input-copy"
-          type="textarea"
-          value={this.state.article.copy}
-          onChange={this.handleChange}
-          name="copy"/>
-          <br/>
-        <label htmlFor="input-bannerImage">Banner Image</label>
-        <input
-          id="input-bannerImage"
-          type="text"
-          value={this.state.article.bannerImage}
-          name="bannerImage"/>
-          <br/>
-        <label htmlFor="input-thumbnailImage">Thumbnail Image</label>
-        <input
-          id="input-thumbnailImage"
-          type="text"
-          value={this.state.article.thumbnailImage}
-          name="thumbnailImage"/>
-          <br/>
-        <input
-          id="input-submit"
-          type="submit"
-          value="Submit"
-          name="submit"/>
+        <form className="article-form" onSubmit={this.handleSubmit}>
+          <label htmlFor="input-headline">Headline</label>
+          <input
+            id="input-headline"
+            type="text"
+            value={this.state.article.headline}
+            onChange={this.handleChange}
+            name="headline"/>
+            <br/>
+            <label htmlFor="input-subline">Subline</label>
+            <input
+              id="input-subline"
+              type="text"
+              value={this.state.article.subline}
+              onChange={this.handleChange}
+              name="subline"/>
+              <br/>
+              <label htmlFor="input-copy">Copy</label>
+              <input
+                id="input-copy"
+                type="textarea"
+                value={this.state.article.copy}
+                onChange={this.handleChange}
+                name="copy"/>
+                <br/>
+                <label htmlFor="input-bannerImage">Banner Image</label>
+                <input
+                  id="input-bannerImage"
+                  type="text"
+                  value={this.state.article.bannerImage}
+                  name="bannerImage"/>
+                  <br/>
+                  <label htmlFor="input-thumbnailImage">Thumbnail Image</label>
+                  <input
+                    id="input-thumbnailImage"
+                    type="text"
+                    value={this.state.article.thumbnailImage}
+                    name="thumbnailImage"/>
+                    <br/>
+                    <input
+                      id="input-submit"
+                      type="submit"
+                      value="Submit"
+                      name="submit"/>
+                      <button onClick={this.handleDelete}>Delete</button>
+                    </form>
+                    {this.makeCategoriesList()}
+                    {this.makeJournalistsDropDown()}
+                    <ImageUploader
+                      imageStore={this.props.imageStore}
+                      title={"Banner Image"}
+                      type={"banner"}
+                      handleImageSelect={this.handleBannerSelect}
+                    />
+                    <ImageUploader
+                      imageStore={this.props.imageStore}
+                      title={"Thumbnail Image"}
+                      type={"thumb"}
+                      handleImageSelect={this.handleThumbSelect}
+                    />
+                  </section>
+                )
 
-      </form>
-      {this.makeCategoriesList()}
-      {this.makeJournalistsDropDown()}
-      <ImageUploader
-        imageStore={this.props.imageStore}
-        title={"Banner Image"}
-        type={"banner"}
-        handleImageSelect={this.handleBannerSelect}
-      />
-      <ImageUploader
-        imageStore={this.props.imageStore}
-        title={"Thumbnail Image"}
-        type={"thumb"}
-        handleImageSelect={this.handleThumbSelect}
-      />
-    </section>
-    )
-
-  }
-
-
-}
+              }
 
 
+            }
 
 
-export default ArticleContainer;
+
+
+            export default ArticleContainer;
