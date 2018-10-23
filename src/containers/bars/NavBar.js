@@ -30,6 +30,7 @@ class NavBar extends Component {
 
     return (
     <header>
+      <a href="/"><img src="/SGNN.png" alt="SGNNlogo"/></a>
       <label className="switch">
       <input
         type="checkbox"
