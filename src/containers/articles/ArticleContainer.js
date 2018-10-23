@@ -50,7 +50,7 @@ class ArticleContainer extends Component{
 
     console.log('did mount', this.url);
 
-    if (this.url === "/articles/"){
+    if (this.url !== "/articles"){
       fetch(this.url)
       .then((res) => res.json())
       .then((data) => {
@@ -80,7 +80,7 @@ class ArticleContainer extends Component{
     }
     articleCopy.thumbnailImage = imageFileName;
     this.setState({article: articleCopy});
-    
+
   }
 
   handleSelect(e){
