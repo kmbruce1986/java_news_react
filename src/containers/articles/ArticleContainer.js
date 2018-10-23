@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 import ImageUploader from '../../components/imagecomponent/ImageUploader.js';
+import ArticleCategories from '../../components/articles/ArticleCategories.js';
+import ArticleJournalist from '../../components/articles/ArticleJournalist.js';
 
 class ArticleContainer extends Component{
 
@@ -17,14 +19,14 @@ class ArticleContainer extends Component{
         categories: [],
         journalist: null
       },
-      categories: null
+      categories: [],
+      journalist: null
     }
 
     this.url = props.url;
 
-    this.makeCategoriesList = this.makeCategoriesList.bind(this);
-    this.makeJournalistsDropDown = this.makeJournalistsDropDown.bind(this);
-    this.handleSelect = this.handleSelect.bind(this);
+
+    this.handleCategorySelectionChange = this.handleCategorySelectionChange.bind(this);
     this.getArticleCategories = this.getArticleCategories.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -35,6 +37,10 @@ class ArticleContainer extends Component{
     this.handleDelete = this.handleDelete.bind(this);
 
     this.isSelectedCategory = this.isSelectedCategory.bind(this);
+    this.getCategoryItems = this.getCategoryItems.bind(this);
+    this.handleJournalistSelect = this.handleJournalistSelect.bind(this);
+
+    this.getJournalistHyperlink = this.getJournalistHyperlink.bind(this);
 
 
   }
@@ -44,12 +50,32 @@ class ArticleContainer extends Component{
     fetch(url)
     .then((res) => res.json())
     .then((data) => {
-      this.setState({categories: data._embedded.categories.map((category) => {
-        return category._links.self;
-      })});
+
+      const articleCategories = data._embedded.categories.map((category) => {
+        return category._links.self.href;
+      })
+
+      const articleCopy = {
+        ...this.state.article
+      }
+      articleCopy.categories = articleCategories;
+      this.setState({article: articleCopy});
+      this.setState({categories: articleCategories});
 
     })
 
+  }
+
+  getJournalistHyperlink(journalistId){
+
+    let journalistHyperlink = '';
+    this.props.journalists.map((journalist) => {
+      if (journalist.id == journalistId){
+        journalistHyperlink = journalist._links.journalist.href;
+      }
+    })
+
+    return journalistHyperlink;
   }
 
   componentDidMount(){
@@ -59,7 +85,7 @@ class ArticleContainer extends Component{
       .then((res) => res.json())
       .then((data) => {
         this.setState({article: data});
-        console.log(data);
+        this.setState({journalist: this.getJournalistHyperlink(data.journalist.id)});
         if (data._links.categories.href){
           this.getArticleCategories(data._links.categories.href);
         }
@@ -87,10 +113,24 @@ class ArticleContainer extends Component{
 
   }
 
-  handleSelect(e){
+  handleCategorySelectionChange(event){
 
-    let values = Array.from(e.target.selectedOptions)
-    .map(option => option.value);
+    const articleCopy = {
+      ...this.state.article
+    }
+
+    let articleCategories = articleCopy.categories;
+
+    const index = articleCategories.indexOf(event.target.dataset.category)
+
+    if (index < 0){
+      articleCategories.push(event.target.dataset.category);
+    } else {
+      articleCategories.splice(index, 1);
+    }
+
+    articleCopy.categories = articleCategories;
+    this.setState({article: articleCopy});
 
   }
 
@@ -107,58 +147,20 @@ class ArticleContainer extends Component{
     return isCategory;
   }
 
-  makeCategoriesList(){
+  getCategoryItems(){
 
-    if (this.props.categories && (this.state.article.categories.length > 0)){
-
-      const categories = this.props.categories.map((category) => {
-
-        console.log(this.isSelectedCategory(category));
-        let selected = '';
-        if (this.isSelectedCategory(category)){
-          selected = 'selected';
+    let categoryItems = [];
+    if (this.props.categories && (this.state.article.categories.length >= 0)){
+      categoryItems = this.props.categories.map((cat) => {
+        if(this.isSelectedCategory(cat)){
+          cat.selected = true;
         }
-
-        return (
-          <option
-            className="article-category-option"
-            key={category.id}
-            value={category._links.self.href}>
-            {category.title}
-          </option>
-        );
-
-      })
-
-      return (
-        <label>Categories
-          <select
-            id="article-category-select"
-            className="article-category-select"
-            name="journalists[]"
-            multiple="multiple"
-            onChange={this.handleSelect}>
-            {categories}
-          </select>
-        </label>
-      )
-
-    } else {
-      return (
-        <label>Categories
-          <select
-            id="article-category-select"
-            className="article-category-select"
-            name="journalists[]" multiple="multiple"
-            onChange={this.handleSelect}>
-            <li>Loading...</li>
-          </select>
-        </label>
-      )
+        return cat;
+      });
     }
+    return categoryItems;
 
   }
-
 
   handleChange(event) {
 
@@ -172,43 +174,12 @@ class ArticleContainer extends Component{
 
   }
 
-  makeJournalistsDropDown(){
-
-    if (this.props.journalists){
-      const journalists = this.props.journalists.map((journalist) => {
-        return(
-          <option
-            key={journalist.id}
-            value={journalist._links.self.href}>
-            {journalist.firstName} {journalist.lastName}
-          </option>
-        )
-      })
-      return (
-        <label>Journalist
-          <select name="journalist">
-            <option value="default">-- Select Journalist --</option>
-            {journalists}
-          </select>
-        </label>
-      )
-
-
-    } else {
-      return (
-        <label>Journalist
-          <select name="journalist">
-            <option value="default">-- Loading --</option>
-          </select>
-        </label>
-      )
-    }
-
+  handleJournalistSelect(event){
+    this.setState({journalist: event.target.value})
   }
 
   handleDelete(event){
-    console.log("Delete");
-    console.log(this.url);
+
     fetch(this.url,{
       method: 'DELETE',
       headers: {'Content-Type': 'application/json'}
@@ -222,32 +193,34 @@ class ArticleContainer extends Component{
 
     event.preventDefault();
 
-    // const article = {
-    //   ...this.state.article
-    // }
-    //
-    // console.log(article);
+    // WHEN SUBMITTING MAKE SURE TO SET ARTICLE JOURNALIST TO state.journalist??
+
+    const article = {
+      ...this.state.article
+    }
+    article.journalist = this.state.journalist;
+
+
+    let requestType;
+
+    if (article.id != null) {
+      requestType = 'PUT'
+    } else {
+      requestType = 'POST'
+    }
+    fetch('/articles',{
+      method: requestType,
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(article)
+    }).then(() => {
+      window.location = "/";
+    })
 
   }
 
   render(){
 
-    const categoriesList = this.makeCategoriesList();
-    const jouralistsDropDown = this.makeJournalistsDropDown();
-
-    let content = (<div>Loading...</div>);
-
-    if (this.state.article){
-      content = (
-        <div>
-          <h1>{this.state.article.headline}</h1>
-          <h4>{this.state.article.subline}</h4>
-          <p>{this.state.article.copy}</p>
-          {categoriesList}
-          {jouralistsDropDown}
-        </div>
-      )
-    }
+    const categoryItems = this.getCategoryItems();
 
     const classes = 'content-area ' + (this.props.user ? 'is-admin': '');
 
@@ -299,8 +272,16 @@ class ArticleContainer extends Component{
                       name="submit"/>
                       <button onClick={this.handleDelete}>Delete</button>
                     </form>
-                    {this.makeCategoriesList()}
-                    {this.makeJournalistsDropDown()}
+                    <ArticleCategories
+                      categoryItems={categoryItems}
+                      selectedCategories={this.state.article.categories}
+                      handleSelectionChange={this.handleCategorySelectionChange}
+                    />
+                    <ArticleJournalist
+                      journalists={this.props.journalists}
+                      articleJournalist={this.state.journalist}
+                      handleJournalistSelect={this.handleJournalistSelect}
+                    />
                     <ImageUploader
                       imageStore={this.props.imageStore}
                       title={"Banner Image"}
@@ -320,8 +301,5 @@ class ArticleContainer extends Component{
 
 
             }
-
-
-
 
             export default ArticleContainer;
