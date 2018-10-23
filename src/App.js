@@ -10,7 +10,7 @@ class App extends Component {
   constructor(props){
     super(props);
     this.state = {
-      isAdmin: true,
+      isAdmin: false,
       categories: null,
       journalists: null,
       imageStore: "http://localhost:8080/images/"
