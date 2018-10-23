@@ -13,7 +13,7 @@ class JournalistContainer extends Component {
   }
 
   componentDidMount(){
-    if (this.url != "/journalists") {
+    if (this.url !== "/journalists") {
       fetch(this.url)
       .then((res) => res.json())
       .then((data) => {

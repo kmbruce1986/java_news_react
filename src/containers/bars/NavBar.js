@@ -3,6 +3,7 @@ import Category from '../../components/categories/Category.js';
 
 
 class NavBar extends Component {
+
   constructor(props){
     super(props);
     this.state = {
@@ -12,22 +13,32 @@ class NavBar extends Component {
     this.handleToggle = this.props.handleToggle.bind(this);
   }
 
-  handleToggle(event){
-    this.props.handleToggle();
-    this.setState(prevState => {
-      return {
-        isAdmin: !prevState.isAdmin
-      }
-    })
-  }
+  // handleToggle(event){
+  //
+  //   this.props.handleToggle();
+  //   this.setState(prevState => {
+  //     console.log("handleToggle", prevState.isAdmin);
+  //     return {
+  //       isAdmin: !prevState.isAdmin
+  //     }
+  //   })
+  //
+  // }
 
   render(){
 
     return (
-    <div>
-      <input type="checkbox" value={this.state.isAdmin} checked={this.state.isAdmin?"checked":""} onChange={this.handleToggle}/>
+    <header>
+      <label className="switch">
+      <input
+        type="checkbox"
+        value={this.state.isAdmin}
+        checked={this.props.user === true ? "checked" : ""}
+        onChange={this.handleToggle}/>
+      <span className="slider round"/>
+      </label>
       <Category categories={this.state.categories}></Category>
-    </div>
+    </header>
   )
   }
 }
