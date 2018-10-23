@@ -2,12 +2,13 @@ import React from 'react';
 import ArticleListItem from '../../components/articles/ArticleListItem.js';
 
 const ArticleList = (props) => {
-// may need to be amended - one article or many?
 	const articles = props.articles.map((article) => {
+		let url = "/article/" + article.id;
 		return(
 		<li key={article.id} className="component-item">
-      {/* placeholder */}
+			<a href={url}>
 			<ArticleListItem article={article} />
+			</a>
 		</li>
 	)
 	})
