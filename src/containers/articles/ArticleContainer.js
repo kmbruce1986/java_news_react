@@ -50,7 +50,7 @@ class ArticleContainer extends Component{
       .then((data) => {
         this.setState({article: data});
         console.log(data);
-        this.getArticleCategories(data._links.categories.href);
+        //this.getArticleCategories(data._links.categories.href);
       })
     }
 

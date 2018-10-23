@@ -12,10 +12,10 @@ class HomeContainer extends Component{
     this.state = {
       isAdmin: this.props.user,
       articles: null,
-      categoryId: props.categoryId,
-      categories: props.categories,
-      category: props.categories.find((cat) => {
-        return cat.id === props.categoryId;
+      categoryId: this.props.categoryId,
+      categories: this.props.categories,
+      category: this.props.categories.find((cat) => {
+        return cat.id == this.props.categoryId;
       })
     }
 
