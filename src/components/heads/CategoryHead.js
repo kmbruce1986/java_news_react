@@ -2,7 +2,6 @@ import React from 'react';
 
 const CategoryHead =  (props) => {
 
-  console.log(props);
   if(props.category){
     return (
       <div className="content-head">{props.category.title}</div>
