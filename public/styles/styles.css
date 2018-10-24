@@ -14,10 +14,6 @@ body {
   height: 200px;
 }
 
-div.content-head {
-  margin-left: 50px;
-}
-
 .article-image {
   object-fit: cover;
   width: 600px;
@@ -67,10 +63,6 @@ div.content-head {
 
   background-color: white;
 
-}
-
-.content-head {
-  grid-area: ch;
 }
 
 .thumbnail-image {
