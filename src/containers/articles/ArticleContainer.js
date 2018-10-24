@@ -206,11 +206,11 @@ class ArticleContainer extends Component{
     let requestType;
 
     if (article.id != null) {
-      requestType = 'PUT'
+      requestType = 'PATCH'
     } else {
       requestType = 'POST'
     }
-    fetch('/articles',{
+    fetch(this.url,{
       method: requestType,
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify(article)
