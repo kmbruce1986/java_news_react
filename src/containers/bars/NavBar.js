@@ -44,8 +44,11 @@ class NavBar extends Component {
           checked={this.props.user === true ? "checked" : ""}
           onChange={this.handleToggle}/>
         <span className="slider round"/>
-        </label>
         <a href="/articles/new">New Article</a>
+        <br/>
+        
+        </label>
+        <a href="/journalist/new">New Journalist</a>
       </div>
     </header>
   )

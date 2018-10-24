@@ -2,10 +2,27 @@ import React from 'react';
 
 const JournalistHead =  (props) => {
 
+  if (props.user){
+    return (
+      <div className="content-head">
+        <h3>{props.article.journalist.firstName} {props.article.journalist.lastName}</h3>
+        <h4>{props.article.journalist.jobTitle}</h4>
+        <h4>{props.article.journalist.bio}</h4>
+        <h4>{props.article.journalist.twitterHandle}</h4>
+        <a href={"/journalist/" + props.article.journalist.id}>Link</a>
+      </div>
+    )
+  } else {
 
-  return (
-    <div className="content-head">{props.article.journalist.firstName} </div>
-  )
+    return (
+      <div className="content-head">
+        <h3>{props.article.journalist.firstName} {props.article.journalist.lastName}</h3>
+        <h4>{props.article.journalist.jobTitle}</h4>
+        <h4>{props.article.journalist.bio}</h4>
+        <h4>{props.article.journalist.twitterHandle}</h4>
+      </div>
+    )
+  }
 
 }
 
