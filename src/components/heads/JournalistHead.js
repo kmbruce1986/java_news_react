@@ -4,7 +4,7 @@ const JournalistHead =  (props) => {
 
   if (props.user){
     return (
-      <div className="content-head">
+      <div className="journalist-head">
         <h3>{props.article.journalist.firstName} {props.article.journalist.lastName}</h3>
         <h4>{props.article.journalist.jobTitle}</h4>
         <h4>{props.article.journalist.bio}</h4>
@@ -15,7 +15,7 @@ const JournalistHead =  (props) => {
   } else {
 
     return (
-      <div className="content-head">
+      <div className="journalist-head">
         <h3>{props.article.journalist.firstName} {props.article.journalist.lastName}</h3>
         <h4>{props.article.journalist.jobTitle}</h4>
         <h4>{props.article.journalist.bio}</h4>

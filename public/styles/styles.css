@@ -8,9 +8,21 @@ body {
   background-color: lightgray;
 }
 
+.category-img {
+  object-fit: cover;
+  width: 600px;
+  height: 200px;
+}
 
+div.content-head {
+  margin-left: 50px;
+}
 
-
+.article-image {
+  object-fit: cover;
+  width: 600px;
+  height: 200px;
+}
 
 .header {
   grid-area: hd;
@@ -57,10 +69,6 @@ body {
 
 }
 
-.article-item {
-  grid-area: ai;
-}
-
 .content-head {
   grid-area: ch;
 }
@@ -72,22 +80,49 @@ body {
 }
 
 div.article-item {
-  background-color: red;
+  /* background-color: red; */
   display: flex;
   flex-wrap: wrap;
-  justify-content: flex-start;
+  /* justify-content: flex-start; */
   margin-left: 50px;
   margin-right: 50px;
+  justify-content: space-around;
 }
 
 .individual-article {
-  background-color: pink;
+  /* background-color: pink; */
   width: 200px;
   height: 150px;
   margin-left: 5px;
   margin-right: 5px;
   margin-top: 5px;
   margin-bottom: 5px;
+  border: 1px solid lightgrey;
+  border-bottom-right-radius: 25px;
+}
+
+.sbjourno-list {
+  font-size: 15pt;
+  margin-bottom: 5px;
+}
+
+.journo-list {
+  margin-left: 10px;
+}
+
+ul.name {
+  font-family: 'Crete Round', serif;
+  font-size: 20px;
+  font-weight: bold;
+  color: rgb(54, 89, 165);
+}
+
+.article-headline-list-item {
+  padding-left: 5px;
+}
+
+a {
+  color: rgb(54, 89, 165);
 }
 
 /* section.section{
@@ -97,6 +132,8 @@ grid-auto-rows: minmax(30px, auto);
 grid-template-areas:
 "ch ch ch"
 /* "ai ai ai"
+
+
 "ai ai ai" */
 /* "ai ai ai";
 
@@ -119,10 +156,31 @@ section {
   width: 100%;
 }
 
+h1 {
+  margin-bottom: 10px;
+  font-family: 'Crete Round', serif;
+}
+
 h2 {
   margin-top: 5px;
+  margin-bottom: 5px;
   font-size: 15pt;
   font-family: 'Crete Round', serif;
+}
+
+h3 {
+  font-family: 'Crete Round', serif;
+}
+
+h4 {
+  font-family: 'Crete Round', serif;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.journalist-head {
+  margin-left: 102px;
+  margin-bottom: 15px;
 }
 
 a {
@@ -139,7 +197,7 @@ a {
 
 .login {
   grid-area: log;
-  background-color: lightblue;
+  /* background-color: lightblue; */
 }
 
 header.header {
@@ -155,21 +213,21 @@ header.header {
 
   height: 101px;
 
-  background-color: lightgreen;
+  /* background-color: lightgreen; */
 }
 
 .nav {
   height: 101px;
-  background-color: papayawhip;
+  /* background-color: papayawhip; */
 }
 
 div.sidebar {
-  background-color: lavender;
+  /* background-color: lavender; */
 }
 
 footer.footer {
 
-  background-color: peachpuff;
+  /* background-color: peachpuff; */
 }
 
 div.logo {
@@ -184,7 +242,7 @@ img.logo {
 
 .nav-links {
   margin-top: 52px;
-  background-color: yellow;
+  /* background-color: yellow; */
 }
 
 

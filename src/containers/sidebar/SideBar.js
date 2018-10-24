@@ -11,7 +11,7 @@ class SideBar extends Component {
   render(){
     const journalists = this.state.journalists.map((journalist) => {
       return(
-        <div>
+        <div className="sbjourno-list">
           <a href={"/journalists/" + journalist.id}>{journalist.firstName} {journalist.lastName}</a>
         </div>
       )
@@ -22,6 +22,7 @@ class SideBar extends Component {
           <h2>Journalists</h2>
           {journalists}
         </div>
+        <br/>
         <div className="weather">
           <a class="weatherwidget-io" href="https://forecast7.com/en/55d86n4d25/glasgow-city/" data-label_1="GLASGOW CITY" data-label_2="WEATHER" data-theme="original" >GLASGOW CITY WEATHER</a>
 
