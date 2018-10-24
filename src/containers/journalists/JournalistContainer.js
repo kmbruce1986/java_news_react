@@ -66,7 +66,6 @@ class JournalistContainer extends Component {
               <input type="text" placeholder="First Name" name="firstName"/>
               <input type="text" placeholder="Last Name" name="lastName"/>
               <input type="text" placeholder="Job Title" name="jobTitle"/>
-              <input type="text" placeholder="Portrait Link" name="portraitURL"/>
               <textarea placeholder="Bio" name="bio" cols="30" rows="10"/>
               <input type="text" placeholder="Twitter Handle" name="twitterHandle"/>
               <button type="submit">Save</button>
@@ -81,7 +80,6 @@ class JournalistContainer extends Component {
               <input type="text" value={this.state.journalist.firstName} onChange={this.handleChange} name="firstName"/>
               <input type="text" value={this.state.journalist.lastName} onChange={this.handleChange} name="lastName"/>
               <input type="text" value={this.state.journalist.jobTitle} onChange={this.handleChange} name="jobTitle"/>
-              <input type="text" value={this.state.journalist.portraitURL} onChange={this.handleChange} name="portraitURL"/>
               <textarea value={this.state.journalist.bio} onChange={this.handleChange} name="bio" cols="30" rows="10"/>
               <input type="text" value={this.state.journalist.twitterHandle} onChange={this.handleChange} name="twitterHandle"/>
               <button type="submit">Save</button>
