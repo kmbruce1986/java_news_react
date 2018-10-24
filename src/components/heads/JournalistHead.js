@@ -9,7 +9,7 @@ const JournalistHead =  (props) => {
         <h4>{props.article.journalist.jobTitle}</h4>
         <h4>{props.article.journalist.bio}</h4>
         <h4>{props.article.journalist.twitterHandle}</h4>
-        <a href={"/journalist/" + props.article.journalist.id}>Link</a>
+        <a href={"/journalist/" + props.article.journalist.id}>Edit</a>
       </div>
     )
   } else {
