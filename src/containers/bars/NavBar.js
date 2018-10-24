@@ -14,46 +14,34 @@ class NavBar extends Component {
     this.handleToggle = this.props.handleToggle.bind(this);
   }
 
-  // handleToggle(event){
-  //
-  //   this.props.handleToggle();
-  //   this.setState(prevState => {
-  //     console.log("handleToggle", prevState.isAdmin);
-  //     return {
-  //       isAdmin: !prevState.isAdmin
-  //     }
-  //   })
-  //
-  // }
-
   render(){
 
     return (
-    <header className="header">
-      <div className="logo">
-        <a  href="/"><img className="logo" src="/SGNN.png" alt="SGNNlogo"/></a>
-      </div>
-      <nav className="nav">
-        <Category categories={this.state.categories}></Category>
-      </nav>
-      <div className="login">
-        <label className="switch">
-        <input
-          type="checkbox"
-          value={this.state.isAdmin}
-          checked={this.props.user === true ? "checked" : ""}
-          onChange={this.handleToggle}/>
-          <br/>
-        <span className="slider round"/>
-        <a href="/articles/new">New Article</a>
-        <br/>
+      <header className="header">
+        <div className="logo">
+          <a  href="/"><img className="logo" src="/SGNN.png" alt="SGNNlogo"/></a>
+        </div>
+        <nav className="nav">
+          <Category categories={this.state.categories}></Category>
+        </nav>
+        <div className="login">
+          <label className="switch">
+            <input
+              type="checkbox"
+              value={this.state.isAdmin}
+              checked={this.props.user === true ? "checked" : ""}
+              onChange={this.handleToggle}/>
+              <br/>
+              <span className="slider round"/>
+              <a href="/articles/new">New Article</a>
+              <br/>
 
-        </label>
-        <a href="/journalist/new">New Journalist</a>
-      </div>
-    </header>
-  )
+            </label>
+            <a href="/journalist/new">New Journalist</a>
+          </div>
+        </header>
+      )
+    }
   }
-}
 
-export default NavBar;
+  export default NavBar;

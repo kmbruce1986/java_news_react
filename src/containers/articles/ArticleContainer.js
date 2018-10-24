@@ -239,9 +239,9 @@ class ArticleContainer extends Component{
         weekday: 'long',
         year: 'numeric',
         month: 'long',
-          day: 'numeric',
-          hour: "2-digit",
-          minute: "2-digit"
+        day: 'numeric',
+        hour: "2-digit",
+        minute: "2-digit"
       };
 
       dateToDisplay = date.toLocaleDateString("en-GB", options);
@@ -281,45 +281,45 @@ class ArticleContainer extends Component{
                 name="bannerImage"/>
 
 
-              <input
-                id="input-subline"
-                type="text"
-                value={this.state.article.subline}
-                onChange={this.handleChange}
-                name="subline"/>
-                <br/>
-
-                <textarea
-                  id="article-textarea"
-                  value={this.state.article.copy}
+                <input
+                  id="input-subline"
+                  type="text"
+                  value={this.state.article.subline}
                   onChange={this.handleChange}
-                  name="copy">
+                  name="subline"/>
+                  <br/>
+
+                  <textarea
+                    id="article-textarea"
+                    value={this.state.article.copy}
+                    onChange={this.handleChange}
+                    name="copy">
 
                   </textarea>
 
 
-                    <ImageUploader
-                      imageStore={this.props.imageStore}
-                      title={"Thumbnail Image"}
-                      type={"thumb"}
-                      handleImageSelect={this.handleThumbSelect}
-                      imageUrl={this.state.article.thumbnailImage}
+                  <ImageUploader
+                    imageStore={this.props.imageStore}
+                    title={"Thumbnail Image"}
+                    type={"thumb"}
+                    handleImageSelect={this.handleThumbSelect}
+                    imageUrl={this.state.article.thumbnailImage}
+                  />
+
+                  <input
+                    id="input-thumbnailImage"
+                    type="text"
+                    disabled="disabled"
+                    value={this.state.article.thumbnailImage}
+                    name="thumbnailImage"/>
+
+                    <ArticleCategories
+                      categoryItems={categoryItems}
+                      selectedCategories={this.state.article.categories}
+                      handleSelectionChange={this.handleCategorySelectionChange}
+                      isAdmin={this.props.user}
                     />
-
-                    <input
-                      id="input-thumbnailImage"
-                      type="text"
-                      disabled="disabled"
-                      value={this.state.article.thumbnailImage}
-                      name="thumbnailImage"/>
-
-                      <ArticleCategories
-                        categoryItems={categoryItems}
-                        selectedCategories={this.state.article.categories}
-                        handleSelectionChange={this.handleCategorySelectionChange}
-                        isAdmin={this.props.user}
-                      />
-                      <div className="article-controls">
+                    <div className="article-controls">
                       <button onClick={this.handleDelete}>Delete</button>
                       <input
                         id="input-submit"
@@ -327,55 +327,55 @@ class ArticleContainer extends Component{
                         value="Submit"
                         name="submit"/>
                       </div>
-                      </form>
+                    </form>
 
-                    </section>
-                  )
-    } else {
-
-
-
-      let journalistName = '';
-      let journalisthref = '';
-      let paragraphs = [];
-      let paras = [];
-      if (this.state.article.journalist){
-        journalistName = this.state.article.journalist.firstName + " " + this.state.article.journalist.lastName;
-        journalisthref = this.state.article.journalist.id;
-        paragraphs = this.state.article.copy.split("\n");
-        paras = paragraphs.map((content) => {
-          return (<p>{content}</p>);
-        })
-      }
+                  </section>
+                )
+              } else {
 
 
 
-      return (
-        <section className={classes}>
-        <h2 className="article-headline">{this.state.article.headline}</h2>
-        <p className="article-date">{dateToDisplay}</p>
-        <p className="article-journalist"><a href={"/journalists/" + journalisthref}>{journalistName}</a></p>
-        <img className="article-banner-img" src={this.props.imageStore + this.state.article.bannerImage}/>
-        <h4 className="article-subline">{this.state.article.subline}</h4>
-        <div className="article-copy">
-          {paras}
-        </div>
-        <ArticleCategories
-          categoryItems={categoryItems}
-          selectedCategories={this.state.article.categories}
-          handleSelectionChange={this.handleCategorySelectionChange}
-          isAdmin={this.props.user}
-        />
-
-        </section>
-      )
-    }
+                let journalistName = '';
+                let journalisthref = '';
+                let paragraphs = [];
+                let paras = [];
+                if (this.state.article.journalist){
+                  journalistName = this.state.article.journalist.firstName + " " + this.state.article.journalist.lastName;
+                  journalisthref = this.state.article.journalist.id;
+                  paragraphs = this.state.article.copy.split("\n");
+                  paras = paragraphs.map((content) => {
+                    return (<p>{content}</p>);
+                  })
+                }
 
 
 
+                return (
+                  <section className={classes}>
+                    <h2 className="article-headline">{this.state.article.headline}</h2>
+                    <p className="article-date">{dateToDisplay}</p>
+                    <p className="article-journalist"><a href={"/journalists/" + journalisthref}>{journalistName}</a></p>
+                    <img className="article-banner-img" src={this.props.imageStore + this.state.article.bannerImage}/>
+                    <h4 className="article-subline">{this.state.article.subline}</h4>
+                    <div className="article-copy">
+                      {paras}
+                    </div>
+                    <ArticleCategories
+                      categoryItems={categoryItems}
+                      selectedCategories={this.state.article.categories}
+                      handleSelectionChange={this.handleCategorySelectionChange}
+                      isAdmin={this.props.user}
+                    />
+
+                  </section>
+                )
               }
+
 
 
             }
 
-            export default ArticleContainer;
+
+          }
+
+          export default ArticleContainer;
