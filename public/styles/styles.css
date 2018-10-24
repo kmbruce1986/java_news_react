@@ -3,7 +3,12 @@ body {
   background-color: lightgray;
 }
 
-/* font-family: 'Crete Round', serif; */
+.article-body {
+  font-family: 'Open Sans', sans-serif;
+  background-color: lightgray;
+}
+
+
 
 .header {
   grid-area: hd;
@@ -51,6 +56,12 @@ body {
   grid-area: ch;
 }
 
+.thumbnail-image {
+  object-fit: cover;
+  width: 200px;
+  height: 70px;
+}
+
 div.article-item {
   background-color: red;
   display: flex;
@@ -63,14 +74,14 @@ div.article-item {
 .individual-article {
   background-color: pink;
   width: 200px;
-  height: 100px;
+  height: 150px;
   margin-left: 5px;
   margin-right: 5px;
   margin-top: 5px;
   margin-bottom: 5px;
 }
 
-section.section{
+/* section.section{
   display:grid;
   grid-template-columns: auto auto auto;
   grid-auto-rows: minmax(30px, auto);
@@ -78,7 +89,7 @@ section.section{
     "ch ch ch"
     /* "ai ai ai"
     "ai ai ai" */
-    "ai ai ai";
+   /* "ai ai ai";
 
     grid-column-gap: 20px;
     grid-row-gap: 15px;
@@ -89,7 +100,7 @@ section.section{
     width: 75%;
 
   background-color: orange;
-}
+} */ */
 
 section.content-area {
   width: 100%;
@@ -97,6 +108,16 @@ section.content-area {
 
 section {
   width: 100%;
+}
+
+h2 {
+  margin-top: 5px;
+  font-size: 15pt;
+  font-family: 'Crete Round', serif;
+}
+
+a {
+  text-decoration: none;
 }
 
 .logo {
