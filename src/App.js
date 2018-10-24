@@ -53,7 +53,7 @@ class App extends Component {
 
           <NavBar user={this.state.isAdmin} handleToggle={this.toggleUser}
             categories={this.state.categories}/>
-          <SideBar/>
+          <SideBar journalists={this.state.journalists}/>
             <Switch>
 
               <Route exact path="/" render={(props) => {
