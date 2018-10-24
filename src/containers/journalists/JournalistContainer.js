@@ -61,13 +61,18 @@ class JournalistContainer extends Component {
     if (this.props.user){
       if (!this.state.journalist) {
         return (
-          <div>
+          <div className="addjourno">
             <form onSubmit={this.handleSubmit}>
               <input type="text" placeholder="First Name" name="firstName"/>
+              <br/>
               <input type="text" placeholder="Last Name" name="lastName"/>
+              <br/>
               <input type="text" placeholder="Job Title" name="jobTitle"/>
+              <br/>
               <textarea placeholder="Bio" name="bio" cols="30" rows="10"/>
+              <br/>
               <input type="text" placeholder="Twitter Handle" name="twitterHandle"/>
+              <br/>
               <button type="submit">Save</button>
             </form>
           </div>
@@ -75,13 +80,18 @@ class JournalistContainer extends Component {
       }
       else {
         return (
-          <div>
+          <div className="addjourno">
             <form onSubmit={this.handleSubmit}>
               <input type="text" value={this.state.journalist.firstName} onChange={this.handleChange} name="firstName"/>
+              <br/>
               <input type="text" value={this.state.journalist.lastName} onChange={this.handleChange} name="lastName"/>
+              <br/>
               <input type="text" value={this.state.journalist.jobTitle} onChange={this.handleChange} name="jobTitle"/>
+              <br/>
               <textarea value={this.state.journalist.bio} onChange={this.handleChange} name="bio" cols="30" rows="10"/>
+              <br/>
               <input type="text" value={this.state.journalist.twitterHandle} onChange={this.handleChange} name="twitterHandle"/>
+              <br/>
               <button type="submit">Save</button>
             </form>
           </div>
