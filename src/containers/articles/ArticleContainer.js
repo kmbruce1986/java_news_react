@@ -336,15 +336,18 @@ class ArticleContainer extends Component{
 
 
       let journalistName = '';
+      let journalisthref = '';
       if (this.state.article.journalist){
         journalistName = this.state.article.journalist.firstName + " " + this.state.article.journalist.lastName;
+        journalisthref = this.state.article.journalist.id;
       }
+
 
       return (
         <section className={classes}>
         <h2 className="article-headline">{this.state.article.headline}</h2>
         <p className="article-date">{dateToDisplay}</p>
-        <p className="article-journalist">{journalistName}</p>
+        <p className="article-journalist"><a href={"/journalists/" + journalisthref}>{journalistName}</a></p>
         <img className="article-banner-img" src={this.props.imageStore + this.state.article.bannerImage}/>
         <h4 className="article-subline">{this.state.article.subline}</h4>
         <div className="article-copy">
