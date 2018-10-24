@@ -11,13 +11,13 @@ class ImageUploader extends Component {
     }
 
     this.fileSelectedHandler = this.fileSelectedHandler.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleImageSubmit = this.handleImageSubmit.bind(this);
 
 
 
   }
 
-  handleSubmit(event){
+  handleImageSubmit(event){
     event.preventDefault();
     //console.log("Form submitting");
 
@@ -81,19 +81,17 @@ class ImageUploader extends Component {
           {image}
 
           <div className="image-upload-controls">
-          <form className={"image-upload " + this.props.type}
-            onSubmit={this.handleSubmit}>
+          <div className={"image-upload " + this.props.type}>
             <input
               type="file"
               name="file"
               className="file-input"
-              required
               onChange={this.fileSelectedHandler}
             />
             <button
-              type="submit"
+             onClick={this.handleImageSubmit}
               className="primary submit-btn">Submit</button>
-            </form>
+            </div>
             <div className="upload-response">
               <div id="singleFileUploadError"></div>
               <div id="singleFileUploadSuccess"></div>
@@ -101,7 +99,6 @@ class ImageUploader extends Component {
           </div>
           </div>
           </div>
-
         </div>
       )
     }
