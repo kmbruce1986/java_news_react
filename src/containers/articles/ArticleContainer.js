@@ -226,6 +226,30 @@ class ArticleContainer extends Component{
 
     const classes = 'section content-area ' + (this.props.user ? 'is-admin': '');
 
+    let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+    let dateTime = '';
+    let dateToDisplay = 'Published Date';
+    if(this.state.article.publishedDateTime){
+
+      dateTime = this.state.article.publishedDateTime;
+      const date = new Date(dateTime);
+
+      var options = {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+          day: 'numeric',
+          hour: "2-digit",
+          minute: "2-digit"
+      };
+
+      dateToDisplay = date.toLocaleDateString("en-GB", options);
+
+    } else {
+      dateToDisplay = Date.now().toLocaleDateString("en-GB", options);
+    }
+
     if(this.props.user){
       return(
         <section className={classes}>
@@ -236,6 +260,12 @@ class ArticleContainer extends Component{
               value={this.state.article.headline}
               onChange={this.handleChange}
               name="headline"/>
+              <p>{dateToDisplay}</p>
+              <ArticleJournalist
+                journalists={this.props.journalists}
+                articleJournalist={this.state.journalist}
+                handleJournalistSelect={this.handleJournalistSelect}
+              />
               <ImageUploader
                 imageStore={this.props.imageStore}
                 title={"Banner Image"}
@@ -246,9 +276,10 @@ class ArticleContainer extends Component{
               <input
                 id="input-bannerImage"
                 type="text"
+                disabled="disabled"
                 value={this.state.article.bannerImage}
                 name="bannerImage"/>
-                <br/>
+
 
               <input
                 id="input-subline"
@@ -265,8 +296,7 @@ class ArticleContainer extends Component{
                   name="copy">
 
                   </textarea>
-                  <br/>
-                  <label htmlFor="input-bannerImage">Banner Image</label>
+
 
                     <ImageUploader
                       imageStore={this.props.imageStore}
@@ -275,17 +305,14 @@ class ArticleContainer extends Component{
                       handleImageSelect={this.handleThumbSelect}
                       imageUrl={this.state.article.thumbnailImage}
                     />
-                    <label htmlFor="input-thumbnailImage">Thumbnail Image</label>
+
                     <input
                       id="input-thumbnailImage"
                       type="text"
+                      disabled="disabled"
                       value={this.state.article.thumbnailImage}
                       name="thumbnailImage"/>
-                      <ArticleJournalist
-                        journalists={this.props.journalists}
-                        articleJournalist={this.state.journalist}
-                        handleJournalistSelect={this.handleJournalistSelect}
-                      />
+
                       <ArticleCategories
                         categoryItems={categoryItems}
                         selectedCategories={this.state.article.categories}
@@ -306,27 +333,7 @@ class ArticleContainer extends Component{
                   )
     } else {
 
-      let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
-      let dateTime = '';
-      let dateToDisplay = 'Published Date';
-      if(this.state.article.publishedDateTime){
-
-        dateTime = this.state.article.publishedDateTime;
-        const date = new Date(dateTime);
-
-        var options = {
-          weekday: 'long',
-          year: 'numeric',
-          month: 'long',
-            day: 'numeric',
-            hour: "2-digit",
-            minute: "2-digit"
-        };
-
-        dateToDisplay = date.toLocaleDateString("en-GB", options)
-
-      }
 
       let journalistName = '';
       if (this.state.article.journalist){

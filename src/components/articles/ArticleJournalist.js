@@ -44,7 +44,7 @@ makeDropDown(){
     })
 
     return (
-      <label>Journalist
+
         <select
           name="journalist"
           value={this.getSelectedHyperlink(this.props.articleJournalist)}
@@ -53,7 +53,7 @@ makeDropDown(){
           <option value="default">-- Select Journalist --</option>
           {journalists}
         </select>
-      </label>
+      
     )
 
   } else if (this.props.journalists) {

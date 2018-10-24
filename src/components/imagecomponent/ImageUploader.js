@@ -77,10 +77,10 @@ class ImageUploader extends Component {
     return (
       <div className={"upload-content " + this.props.type}>
         <div className={"single-upload " + this.props.type}>
-          <h4>{this.props.title}</h4>
           <div className={"image-box " + this.props.type}>
           {image}
-          </div>
+
+          <div className="image-upload-controls">
           <form className={"image-upload " + this.props.type}
             onSubmit={this.handleSubmit}>
             <input
@@ -98,6 +98,8 @@ class ImageUploader extends Component {
               <div id="singleFileUploadError"></div>
               <div id="singleFileUploadSuccess"></div>
             </div>
+          </div>
+          </div>
           </div>
 
         </div>
