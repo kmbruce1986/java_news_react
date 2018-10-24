@@ -5,11 +5,11 @@ const ArticleList = (props) => {
 	const articles = props.articles.map((article) => {
 		let url = "/article/" + article.id;
 		return(
-		<li key={article.id} className="component-item">
+		<div key={article.id} className="content-head">
 			<a href={url}>
 			<ArticleListItem article={article} />
 			</a>
-		</li>
+		</div>
 	)
 	})
 
@@ -17,9 +17,9 @@ const ArticleList = (props) => {
 
 	return (
 
-		<ul className="component-list">
+		<div className="article-item">
 			{articles}
-		</ul>
+		</div>
 	)
 }
 

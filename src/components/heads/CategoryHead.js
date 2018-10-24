@@ -5,7 +5,7 @@ const CategoryHead =  (props) => {
   console.log(props);
   if(props.category){
     return (
-      <div>{props.category.title}</div>
+      <div className="content-head">{props.category.title}</div>
     )
   } else {
     return (

@@ -4,7 +4,7 @@ const JournalistHead =  (props) => {
 
 
   return (
-    <div>{props.article.journalist.firstName} </div>
+    <div className="content-head">{props.article.journalist.firstName} </div>
   )
 
 }
