@@ -33,29 +33,54 @@ class ArticleCategories extends Component {
 
     const categoryDivs = this.props.categoryItems.map((catItem) => {
 
-      let classes = this.isSelectedCategory(catItem) ? 'category-item selected-category' : 'category-item';
+      const selectedCategory = this.isSelectedCategory(catItem)
+      let classes = selectedCategory ? 'category-item selected-category' : 'category-item';
+
+      if (this.props.isAdmin){
+        return (
+          <div
+          key={catItem.id}
+          className="category-div is-admin">
+            <p
+              className={classes}
+              onClick={this.props.handleSelectionChange}
+              data-category={catItem._links.self.href}
+              className={classes + " is-admin"}>
+              {catItem.title}
+            </p>
+          </div>
+        )
+      } else {
+        if (selectedCategory){
+          return (
+            <div
+            key={catItem.id}
+            className="category-div">
+              <p
+                className={classes}
+                data-category={catItem._links.self.href}
+                className={classes}>
+                {catItem.title}
+              </p>
+            </div>
+          )
+        }
+
+      }
+
+    });
+
 
       return (
-        <div key={catItem.id}>
-          <p
-            className={classes}
-            onClick={this.props.handleSelectionChange}
-            data-category={catItem._links.self.href}
-            className={classes}>
-            {catItem.title}
-          </p>
+        <div className="article-categories">
+          <h4>Article Categories</h4>
+          <div className="article-category-select">
+            {categoryDivs}
+          </div>
         </div>
       )
-    })
 
-    return (
-      <div className="article-categories">
-        <h4>Article Categories</h4>
-        <div className="article-category-select">
-          {categoryDivs}
-        </div>
-      </div>
-    )
+
 
   }
 

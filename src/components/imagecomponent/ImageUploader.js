@@ -6,7 +6,8 @@ class ImageUploader extends Component {
     super(props);
     this.state = {
       selectedFile: null,
-      lastUploadedFileName: ''
+      lastUploadedFileName: '',
+      imageUrl: props.imageUrl
     }
 
     this.fileSelectedHandler = this.fileSelectedHandler.bind(this);
@@ -44,7 +45,7 @@ class ImageUploader extends Component {
       console.log("Success");
       console.log(success);
       this.setState({
-        lastUploadedFileName: success.fileName
+        imageUrl: success.fileName
       })
       this.props.handleImageSelect(success.fileName);
     })
@@ -62,14 +63,23 @@ class ImageUploader extends Component {
 
   render(){
 
+    let image = '';
+
+    if (this.props.imageUrl !== ''){
+      image = (
+        <img
+          className={"article-image " + this.props.type}
+          src={this.props.imageStore + this.props.imageUrl}/>
+      )
+    }
+
 
     return (
       <div className={"upload-content " + this.props.type}>
         <div className={"single-upload " + this.props.type}>
           <h4>{this.props.title}</h4>
           <div className={"image-box " + this.props.type}>
-            <img
-              className={"article-image " + this.props.type} src={this.props.imageStore + this.state.lastUploadedFileName}/>
+          {image}
           </div>
           <form className={"image-upload " + this.props.type}
             onSubmit={this.handleSubmit}>

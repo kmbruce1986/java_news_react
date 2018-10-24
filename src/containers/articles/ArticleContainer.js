@@ -222,80 +222,137 @@ class ArticleContainer extends Component{
 
     const categoryItems = this.getCategoryItems();
 
-    const classes = 'content-area ' + (this.props.user ? 'is-admin': '');
+    const classes = 'section content-area ' + (this.props.user ? 'is-admin': '');
 
-    return(
-      <section className={classes}>
-        <form className="article-form" onSubmit={this.handleSubmit}>
-          <label htmlFor="input-headline">Headline</label>
-          <input
-            id="input-headline"
-            type="text"
-            value={this.state.article.headline}
-            onChange={this.handleChange}
-            name="headline"/>
-            <br/>
-            <label htmlFor="input-subline">Subline</label>
+    if(this.props.user){
+      return(
+        <section className={classes}>
+          <form className="article-form" onSubmit={this.handleSubmit}>
             <input
-              id="input-subline"
+              id="input-headline"
               type="text"
-              value={this.state.article.subline}
+              value={this.state.article.headline}
               onChange={this.handleChange}
-              name="subline"/>
-              <br/>
-              <label htmlFor="input-copy">Copy</label>
+              name="headline"/>
+              <ImageUploader
+                imageStore={this.props.imageStore}
+                title={"Banner Image"}
+                type={"banner"}
+                handleImageSelect={this.handleBannerSelect}
+                imageUrl={this.state.article.bannerImage}
+              />
               <input
-                id="input-copy"
-                type="textarea"
-                value={this.state.article.copy}
-                onChange={this.handleChange}
-                name="copy"/>
+                id="input-bannerImage"
+                type="text"
+                value={this.state.article.bannerImage}
+                name="bannerImage"/>
                 <br/>
-                <label htmlFor="input-bannerImage">Banner Image</label>
-                <input
-                  id="input-bannerImage"
-                  type="text"
-                  value={this.state.article.bannerImage}
-                  name="bannerImage"/>
+
+              <input
+                id="input-subline"
+                type="text"
+                value={this.state.article.subline}
+                onChange={this.handleChange}
+                name="subline"/>
+                <br/>
+
+                <textarea
+                  id="article-textarea"
+                  value={this.state.article.copy}
+                  onChange={this.handleChange}
+                  name="copy">
+
+                  </textarea>
                   <br/>
-                  <label htmlFor="input-thumbnailImage">Thumbnail Image</label>
-                  <input
-                    id="input-thumbnailImage"
-                    type="text"
-                    value={this.state.article.thumbnailImage}
-                    name="thumbnailImage"/>
-                    <br/>
-                    <input
-                      id="input-submit"
-                      type="submit"
-                      value="Submit"
-                      name="submit"/>
-                      <button onClick={this.handleDelete}>Delete</button>
-                    </form>
-                    <ArticleCategories
-                      categoryItems={categoryItems}
-                      selectedCategories={this.state.article.categories}
-                      handleSelectionChange={this.handleCategorySelectionChange}
-                    />
-                    <ArticleJournalist
-                      journalists={this.props.journalists}
-                      articleJournalist={this.state.journalist}
-                      handleJournalistSelect={this.handleJournalistSelect}
-                    />
-                    <ImageUploader
-                      imageStore={this.props.imageStore}
-                      title={"Banner Image"}
-                      type={"banner"}
-                      handleImageSelect={this.handleBannerSelect}
-                    />
+                  <label htmlFor="input-bannerImage">Banner Image</label>
+
                     <ImageUploader
                       imageStore={this.props.imageStore}
                       title={"Thumbnail Image"}
                       type={"thumb"}
                       handleImageSelect={this.handleThumbSelect}
+                      imageUrl={this.state.article.thumbnailImage}
                     />
-                  </section>
-                )
+                    <label htmlFor="input-thumbnailImage">Thumbnail Image</label>
+                    <input
+                      id="input-thumbnailImage"
+                      type="text"
+                      value={this.state.article.thumbnailImage}
+                      name="thumbnailImage"/>
+                      <ArticleJournalist
+                        journalists={this.props.journalists}
+                        articleJournalist={this.state.journalist}
+                        handleJournalistSelect={this.handleJournalistSelect}
+                      />
+                      <ArticleCategories
+                        categoryItems={categoryItems}
+                        selectedCategories={this.state.article.categories}
+                        handleSelectionChange={this.handleCategorySelectionChange}
+                        isAdmin={this.props.user}
+                      />
+                      <div className="article-controls">
+                      <button onClick={this.handleDelete}>Delete</button>
+                      <input
+                        id="input-submit"
+                        type="submit"
+                        value="Submit"
+                        name="submit"/>
+                      </div>
+                      </form>
+
+                    </section>
+                  )
+    } else {
+
+      let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+      let dateTime = '';
+      let dateToDisplay = 'Published Date';
+      if(this.state.article.publishedDateTime){
+
+        dateTime = this.state.article.publishedDateTime;
+        const date = new Date(dateTime);
+
+        var options = {
+          weekday: 'long',
+          year: 'numeric',
+          month: 'long',
+            day: 'numeric',
+            hour: "2-digit",
+            minute: "2-digit"
+        };
+
+        dateToDisplay = date.toLocaleDateString("en-GB", options)
+
+      }
+
+      let journalistName = '';
+      if (this.state.article.journalist){
+        journalistName = this.state.article.journalist.firstName + " " + this.state.article.journalist.lastName;
+      }
+
+      return (
+        <section className={classes}>
+        <h2 className="article-headline">{this.state.article.headline}</h2>
+        <p className="article-date">{dateToDisplay}</p>
+        <p className="article-journalist">{journalistName}</p>
+        <img className="article-banner-img" src={this.props.imageStore + this.state.article.bannerImage}/>
+        <h4 className="article-subline">{this.state.article.subline}</h4>
+        <div className="article-copy">
+          {this.state.article.copy}
+        </div>
+        <ArticleCategories
+          categoryItems={categoryItems}
+          selectedCategories={this.state.article.categories}
+          handleSelectionChange={this.handleCategorySelectionChange}
+          isAdmin={this.props.user}
+        />
+
+        </section>
+      )
+    }
+
+
 
               }
 
