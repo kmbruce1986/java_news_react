@@ -16,13 +16,20 @@ class SideBar extends Component {
         </div>
       )
     })
-      return(
+    return(
       <div className="sidebar">
-        <h2>Journalists</h2>
-        {journalists}
-      </div>
-    )
-  }
-}
+        <div className="journo-list">
+          <h2>Journalists</h2>
+          {journalists}
+        </div>
+        <div className="weather">
+          <a class="weatherwidget-io" href="https://forecast7.com/en/55d86n4d25/glasgow-city/" data-label_1="GLASGOW CITY" data-label_2="WEATHER" data-theme="original" >GLASGOW CITY WEATHER</a>
 
-export default SideBar;
+        </div>
+      </div>
+      )
+
+    }
+  }
+
+  export default SideBar;

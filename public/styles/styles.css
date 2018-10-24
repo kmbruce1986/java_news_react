@@ -10,6 +10,8 @@ body {
 
 
 
+
+
 .header {
   grid-area: hd;
 }
@@ -24,25 +26,32 @@ body {
 
 .footer {
   grid-area: ft;
+  display: flex;
+  justify-content: space-between;
+}
+
+
+.contact-details {
+  text-align: right;
 }
 
 .wrapper {
   display:grid;
   grid-template-columns: auto auto auto 200px;
   grid-auto-rows: minmax(30px, auto);
-    grid-template-areas:
-    "hd hd hd hd "
-    "sc sc sc sb"
-    "sc sc sc sb"
-    "ft ft ft ft";
+  grid-template-areas:
+  "hd hd hd hd "
+  "sc sc sc sb"
+  "sc sc sc sb"
+  "ft ft ft ft";
 
-    grid-column-gap: 20px;
-    grid-row-gap: 15px;
-    position: relative;
-    width: 98%;
-    margin-left: auto;
-    margin-right: auto;
-    width: 75%;
+  grid-column-gap: 20px;
+  grid-row-gap: 15px;
+  position: relative;
+  width: 98%;
+  margin-left: auto;
+  margin-right: auto;
+  width: 75%;
 
   background-color: white;
 
@@ -82,24 +91,24 @@ div.article-item {
 }
 
 /* section.section{
-  display:grid;
-  grid-template-columns: auto auto auto;
-  grid-auto-rows: minmax(30px, auto);
-    grid-template-areas:
-    "ch ch ch"
-    /* "ai ai ai"
-    "ai ai ai" */
-   /* "ai ai ai";
+display:grid;
+grid-template-columns: auto auto auto;
+grid-auto-rows: minmax(30px, auto);
+grid-template-areas:
+"ch ch ch"
+/* "ai ai ai"
+"ai ai ai" */
+/* "ai ai ai";
 
-    grid-column-gap: 20px;
-    grid-row-gap: 15px;
-    position: relative;
-    width: 98%;
-    margin-left: auto;
-    margin-right: auto;
-    width: 75%;
+grid-column-gap: 20px;
+grid-row-gap: 15px;
+position: relative;
+width: 98%;
+margin-left: auto;
+margin-right: auto;
+width: 75%;
 
-  background-color: orange;
+background-color: orange;
 } */ */
 
 section.content-area {
@@ -137,14 +146,14 @@ header.header {
   display:grid;
   grid-template-columns: 239px auto 200px;
   grid-auto-rows: minmax(30px, auto);
-    grid-template-areas:
-    "lg nv log";
+  grid-template-areas:
+  "lg nv log";
 
-    grid-column-gap: 20px;
-    grid-row-gap: 15px;
-    position: relative;
+  grid-column-gap: 20px;
+  grid-row-gap: 15px;
+  position: relative;
 
-    height: 101px;
+  height: 101px;
 
   background-color: lightgreen;
 }
@@ -204,9 +213,9 @@ header ul li a {
 }
 
 /* .content-area {
-  width: 70%;
-  min-height: 600px;
-  margin-top: 20px;
+width: 70%;
+min-height: 600px;
+margin-top: 20px;
 } */
 
 .is-admin {
@@ -403,7 +412,7 @@ header ul li a {
 }
 
 .categoryItem.is-admin {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .article-banner-img {
