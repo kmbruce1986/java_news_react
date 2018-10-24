@@ -75,10 +75,9 @@ div.article-item {
   /* background-color: red; */
   display: flex;
   flex-wrap: wrap;
-  /* justify-content: flex-start; */
   margin-left: 50px;
   margin-right: 50px;
-  justify-content: space-around;
+  justify-content: flex-start;
 }
 
 .individual-article {
