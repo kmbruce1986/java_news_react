@@ -46,6 +46,9 @@ class App extends Component {
     if(!this.state.categories){
       return null;
     }
+    if(!this.state.journalists){
+      return null;
+    }
     return (
 
       <Router>

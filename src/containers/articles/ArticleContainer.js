@@ -68,7 +68,9 @@ class ArticleContainer extends Component{
 
   getJournalistHyperlink(journalistId){
 
+
     let journalistHyperlink = '';
+    console.log(this.props.journalists);
     this.props.journalists.map((journalist) => {
       if (journalist.id == journalistId){
         journalistHyperlink = journalist._links.journalist.href;
