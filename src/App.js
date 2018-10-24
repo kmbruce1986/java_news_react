@@ -43,7 +43,7 @@ class App extends Component {
   }
 
   render() {
-    if(!this.state.categories){
+    if(!this.state.categories || !this.state.journalists){
       return null;
     }
     return (

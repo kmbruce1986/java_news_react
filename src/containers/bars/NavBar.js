@@ -45,6 +45,7 @@ class NavBar extends Component {
           onChange={this.handleToggle}/>
         <span className="slider round"/>
         </label>
+        <a href="/articles/new">New Article</a>
       </div>
     </header>
   )

@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 import ImageUploader from '../../components/imagecomponent/ImageUploader.js';
+import ArticleCategories from '../../components/articles/ArticleCategories.js';
+import ArticleJournalist from '../../components/articles/ArticleJournalist.js';
 
 class ArticleContainer extends Component{
 
@@ -17,14 +19,14 @@ class ArticleContainer extends Component{
         categories: [],
         journalist: null
       },
-      categories: null
+      categories: [],
+      journalist: null
     }
 
     this.url = props.url;
 
-    this.makeCategoriesList = this.makeCategoriesList.bind(this);
-    this.makeJournalistsDropDown = this.makeJournalistsDropDown.bind(this);
-    this.handleSelect = this.handleSelect.bind(this);
+
+    this.handleCategorySelectionChange = this.handleCategorySelectionChange.bind(this);
     this.getArticleCategories = this.getArticleCategories.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -35,6 +37,10 @@ class ArticleContainer extends Component{
     this.handleDelete = this.handleDelete.bind(this);
 
     this.isSelectedCategory = this.isSelectedCategory.bind(this);
+    this.getCategoryItems = this.getCategoryItems.bind(this);
+    this.handleJournalistSelect = this.handleJournalistSelect.bind(this);
+
+    this.getJournalistHyperlink = this.getJournalistHyperlink.bind(this);
 
 
   }
@@ -44,22 +50,46 @@ class ArticleContainer extends Component{
     fetch(url)
     .then((res) => res.json())
     .then((data) => {
-      this.setState({categories: data._embedded.categories.map((category) => {
-        return category._links.self;
-      })});
+
+      const articleCategories = data._embedded.categories.map((category) => {
+        return category._links.self.href;
+      })
+
+      const articleCopy = {
+        ...this.state.article
+      }
+      articleCopy.categories = articleCategories;
+      this.setState({article: articleCopy});
+      this.setState({categories: articleCategories});
 
     })
 
   }
 
+  getJournalistHyperlink(journalistId){
+
+
+    let journalistHyperlink = '';
+    console.log(this.props.journalists);
+    this.props.journalists.map((journalist) => {
+      if (journalist.id == journalistId){
+        journalistHyperlink = journalist._links.journalist.href;
+      }
+    })
+
+    return journalistHyperlink;
+  }
+
   componentDidMount(){
+
+    console.log(this.url);
 
     if (this.url !== "/articles"){
       fetch(this.url)
       .then((res) => res.json())
       .then((data) => {
         this.setState({article: data});
-        console.log(data);
+        this.setState({journalist: this.getJournalistHyperlink(data.journalist.id)});
         if (data._links.categories.href){
           this.getArticleCategories(data._links.categories.href);
         }
@@ -87,10 +117,24 @@ class ArticleContainer extends Component{
 
   }
 
-  handleSelect(e){
+  handleCategorySelectionChange(event){
 
-    let values = Array.from(e.target.selectedOptions)
-    .map(option => option.value);
+    const articleCopy = {
+      ...this.state.article
+    }
+
+    let articleCategories = articleCopy.categories;
+
+    const index = articleCategories.indexOf(event.target.dataset.category)
+
+    if (index < 0){
+      articleCategories.push(event.target.dataset.category);
+    } else {
+      articleCategories.splice(index, 1);
+    }
+
+    articleCopy.categories = articleCategories;
+    this.setState({article: articleCopy});
 
   }
 
@@ -107,58 +151,20 @@ class ArticleContainer extends Component{
     return isCategory;
   }
 
-  makeCategoriesList(){
+  getCategoryItems(){
 
-    if (this.props.categories && (this.state.article.categories.length > 0)){
-
-      const categories = this.props.categories.map((category) => {
-
-        console.log(this.isSelectedCategory(category));
-        let selected = '';
-        if (this.isSelectedCategory(category)){
-          selected = 'selected';
+    let categoryItems = [];
+    if (this.props.categories && (this.state.article.categories.length >= 0)){
+      categoryItems = this.props.categories.map((cat) => {
+        if(this.isSelectedCategory(cat)){
+          cat.selected = true;
         }
-
-        return (
-          <option
-            className="article-category-option"
-            key={category.id}
-            value={category._links.self.href}>
-            {category.title}
-          </option>
-        );
-
-      })
-
-      return (
-        <label>Categories
-          <select
-            id="article-category-select"
-            className="article-category-select"
-            name="journalists[]"
-            multiple="multiple"
-            onChange={this.handleSelect}>
-            {categories}
-          </select>
-        </label>
-      )
-
-    } else {
-      return (
-        <label>Categories
-          <select
-            id="article-category-select"
-            className="article-category-select"
-            name="journalists[]" multiple="multiple"
-            onChange={this.handleSelect}>
-            <li>Loading...</li>
-          </select>
-        </label>
-      )
+        return cat;
+      });
     }
+    return categoryItems;
 
   }
-
 
   handleChange(event) {
 
@@ -172,43 +178,12 @@ class ArticleContainer extends Component{
 
   }
 
-  makeJournalistsDropDown(){
-
-    if (this.props.journalists){
-      const journalists = this.props.journalists.map((journalist) => {
-        return(
-          <option
-            key={journalist.id}
-            value={journalist._links.self.href}>
-            {journalist.firstName} {journalist.lastName}
-          </option>
-        )
-      })
-      return (
-        <label>Journalist
-          <select name="journalist">
-            <option value="default">-- Select Journalist --</option>
-            {journalists}
-          </select>
-        </label>
-      )
-
-
-    } else {
-      return (
-        <label>Journalist
-          <select name="journalist">
-            <option value="default">-- Loading --</option>
-          </select>
-        </label>
-      )
-    }
-
+  handleJournalistSelect(event){
+    this.setState({journalist: event.target.value})
   }
 
   handleDelete(event){
-    console.log("Delete");
-    console.log(this.url);
+
     fetch(this.url,{
       method: 'DELETE',
       headers: {'Content-Type': 'application/json'}
@@ -222,106 +197,168 @@ class ArticleContainer extends Component{
 
     event.preventDefault();
 
-    // const article = {
-    //   ...this.state.article
-    // }
-    //
-    // console.log(article);
+    const article = {
+      ...this.state.article
+    }
+    article.journalist = this.state.journalist;
+
+
+    let requestType;
+
+    if (article.id != null) {
+      requestType = 'PATCH'
+    } else {
+      requestType = 'POST'
+    }
+    fetch(this.url,{
+      method: requestType,
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(article)
+    }).then(() => {
+      window.location = "/";
+    })
 
   }
 
   render(){
 
-    const categoriesList = this.makeCategoriesList();
-    const jouralistsDropDown = this.makeJournalistsDropDown();
+    const categoryItems = this.getCategoryItems();
 
-    let content = (<div>Loading...</div>);
+    const classes = 'section content-area ' + (this.props.user ? 'is-admin': '');
 
-    if (this.state.article){
-      content = (
-        <div>
-          <h1>{this.state.article.headline}</h1>
-          <h4>{this.state.article.subline}</h4>
-          <p>{this.state.article.copy}</p>
-          {categoriesList}
-          {jouralistsDropDown}
-        </div>
-      )
-    }
-
-    const classes = 'content-area ' + (this.props.user ? 'is-admin': '');
-
-    return(
-      <section className={classes}>
-        <form className="article-form" onSubmit={this.handleSubmit}>
-          <label htmlFor="input-headline">Headline</label>
-          <input
-            id="input-headline"
-            type="text"
-            value={this.state.article.headline}
-            onChange={this.handleChange}
-            name="headline"/>
-            <br/>
-            <label htmlFor="input-subline">Subline</label>
+    if(this.props.user){
+      return(
+        <section className={classes}>
+          <form className="article-form" onSubmit={this.handleSubmit}>
             <input
-              id="input-subline"
+              id="input-headline"
               type="text"
-              value={this.state.article.subline}
+              value={this.state.article.headline}
               onChange={this.handleChange}
-              name="subline"/>
-              <br/>
-              <label htmlFor="input-copy">Copy</label>
+              name="headline"/>
+              <ImageUploader
+                imageStore={this.props.imageStore}
+                title={"Banner Image"}
+                type={"banner"}
+                handleImageSelect={this.handleBannerSelect}
+                imageUrl={this.state.article.bannerImage}
+              />
               <input
-                id="input-copy"
-                type="textarea"
-                value={this.state.article.copy}
-                onChange={this.handleChange}
-                name="copy"/>
+                id="input-bannerImage"
+                type="text"
+                value={this.state.article.bannerImage}
+                name="bannerImage"/>
                 <br/>
-                <label htmlFor="input-bannerImage">Banner Image</label>
-                <input
-                  id="input-bannerImage"
-                  type="text"
-                  value={this.state.article.bannerImage}
-                  name="bannerImage"/>
+
+              <input
+                id="input-subline"
+                type="text"
+                value={this.state.article.subline}
+                onChange={this.handleChange}
+                name="subline"/>
+                <br/>
+
+                <textarea
+                  id="article-textarea"
+                  value={this.state.article.copy}
+                  onChange={this.handleChange}
+                  name="copy">
+
+                  </textarea>
                   <br/>
-                  <label htmlFor="input-thumbnailImage">Thumbnail Image</label>
-                  <input
-                    id="input-thumbnailImage"
-                    type="text"
-                    value={this.state.article.thumbnailImage}
-                    name="thumbnailImage"/>
-                    <br/>
-                    <input
-                      id="input-submit"
-                      type="submit"
-                      value="Submit"
-                      name="submit"/>
-                      <button onClick={this.handleDelete}>Delete</button>
-                    </form>
-                    {this.makeCategoriesList()}
-                    {this.makeJournalistsDropDown()}
-                    <ImageUploader
-                      imageStore={this.props.imageStore}
-                      title={"Banner Image"}
-                      type={"banner"}
-                      handleImageSelect={this.handleBannerSelect}
-                    />
+                  <label htmlFor="input-bannerImage">Banner Image</label>
+
                     <ImageUploader
                       imageStore={this.props.imageStore}
                       title={"Thumbnail Image"}
                       type={"thumb"}
                       handleImageSelect={this.handleThumbSelect}
+                      imageUrl={this.state.article.thumbnailImage}
                     />
-                  </section>
-                )
+                    <label htmlFor="input-thumbnailImage">Thumbnail Image</label>
+                    <input
+                      id="input-thumbnailImage"
+                      type="text"
+                      value={this.state.article.thumbnailImage}
+                      name="thumbnailImage"/>
+                      <ArticleJournalist
+                        journalists={this.props.journalists}
+                        articleJournalist={this.state.journalist}
+                        handleJournalistSelect={this.handleJournalistSelect}
+                      />
+                      <ArticleCategories
+                        categoryItems={categoryItems}
+                        selectedCategories={this.state.article.categories}
+                        handleSelectionChange={this.handleCategorySelectionChange}
+                        isAdmin={this.props.user}
+                      />
+                      <div className="article-controls">
+                      <button onClick={this.handleDelete}>Delete</button>
+                      <input
+                        id="input-submit"
+                        type="submit"
+                        value="Submit"
+                        name="submit"/>
+                      </div>
+                      </form>
+
+                    </section>
+                  )
+    } else {
+
+      let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+      let dateTime = '';
+      let dateToDisplay = 'Published Date';
+      if(this.state.article.publishedDateTime){
+
+        dateTime = this.state.article.publishedDateTime;
+        const date = new Date(dateTime);
+
+        var options = {
+          weekday: 'long',
+          year: 'numeric',
+          month: 'long',
+            day: 'numeric',
+            hour: "2-digit",
+            minute: "2-digit"
+        };
+
+        dateToDisplay = date.toLocaleDateString("en-GB", options)
+
+      }
+
+      let journalistName = '';
+      if (this.state.article.journalist){
+        journalistName = this.state.article.journalist.firstName + " " + this.state.article.journalist.lastName;
+      }
+
+      return (
+        <section className={classes}>
+        <h2 className="article-headline">{this.state.article.headline}</h2>
+        <p className="article-date">{dateToDisplay}</p>
+        <p className="article-journalist">{journalistName}</p>
+        <img className="article-banner-img" src={this.props.imageStore + this.state.article.bannerImage}/>
+        <h4 className="article-subline">{this.state.article.subline}</h4>
+        <div className="article-copy">
+          {this.state.article.copy}
+        </div>
+        <ArticleCategories
+          categoryItems={categoryItems}
+          selectedCategories={this.state.article.categories}
+          handleSelectionChange={this.handleCategorySelectionChange}
+          isAdmin={this.props.user}
+        />
+
+        </section>
+      )
+    }
+
+
 
               }
 
 
             }
-
-
-
 
             export default ArticleContainer;
