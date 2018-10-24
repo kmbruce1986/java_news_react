@@ -80,6 +80,8 @@ class ArticleContainer extends Component{
 
   componentDidMount(){
 
+    console.log(this.url);
+
     if (this.url !== "/articles"){
       fetch(this.url)
       .then((res) => res.json())
@@ -192,8 +194,6 @@ class ArticleContainer extends Component{
   handleSubmit(event){
 
     event.preventDefault();
-
-    // WHEN SUBMITTING MAKE SURE TO SET ARTICLE JOURNALIST TO state.journalist??
 
     const article = {
       ...this.state.article

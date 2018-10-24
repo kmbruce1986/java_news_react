@@ -15,8 +15,6 @@ getSelectedHyperlink(articleJournalist){
 
   this.props.journalists.map((journalist) => {
 
-    console.log('props journalist',journalist._links.self.href);
-
     if (journalist.id == articleJournalist.id){
       selectedHyperlink = journalist._links.self.href;
     }
