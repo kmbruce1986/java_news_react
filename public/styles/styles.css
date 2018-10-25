@@ -1,6 +1,7 @@
 body {
   font-family: 'Open Sans', sans-serif;
   background-color: lightgray;
+    margin: 0;
 }
 
 .article-body {

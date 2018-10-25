@@ -5,12 +5,12 @@ const ArticleList = (props) => {
 	const articles = props.articles.map((article) => {
 		let url = "/article/" + article.id;
 		return(
-		<div key={article.id} className="content-head">
-			<a href={url}>
-			<ArticleListItem article={article} />
-			</a>
-		</div>
-	)
+			<div key={article.id} className="content-head">
+				<a href={url}>
+					<ArticleListItem article={article} />
+				</a>
+			</div>
+		)
 	})
 
 

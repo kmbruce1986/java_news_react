@@ -19,21 +19,13 @@ class ImageUploader extends Component {
 
   handleImageSubmit(event){
     event.preventDefault();
-    //console.log("Form submitting");
 
     const formData = new FormData();
     formData.append("file", this.state.selectedFile);
 
-    // if(this.state.selectedFile !== null){
-    //   console.log(formData);
-    //
-    // }
 
     fetch('/uploadFile', { // Your POST endpoint
       method: 'POST',
-      // headers: {
-      //   "Content-Type": "You will perhaps need to define a content-type here"
-      // },
       body: formData// This is your file object
     })
     .then((response) => {
@@ -57,7 +49,6 @@ class ImageUploader extends Component {
   fileSelectedHandler(event){
 
     this.setState({selectedFile: event.target.files[0]});
-    //console.log(event.target.files[0]);
 
   }
 
